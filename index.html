@@ -73,19 +73,52 @@
       text-decoration: none;
     }
 
-    /* ===== HERO ZONE ===== */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: var(--space-xl) var(--space-lg);
+    /* ===== PHOTO HERO (full bleed) ===== */
+    .photo-hero {
       position: relative;
+      width: 100%;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .photo-hero__image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-hero__overlay {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: var(--space-md);
+      opacity: 0;
+      animation: fadeIn 1s var(--ease-out-expo) 0.3s forwards;
+    }
+
+    .photo-hero__text {
+      font-family: var(--font-display);
+      font-size: clamp(56px, 14vw, 140px);
+      font-weight: 700;
+      color: var(--color-volt);
+      text-shadow: 0 4px 60px rgba(0, 0, 0, 0.6);
+      line-height: 0.9;
+    }
+
+    /* ===== NAME SECTION ===== */
+    .name-section {
+      background: var(--color-black);
+      padding: var(--space-xl) var(--space-lg);
       text-align: center;
     }
 
-    .hero-name {
+    .name-section__name {
       font-family: var(--font-display);
       font-size: var(--text-hero);
       font-weight: 700;
@@ -98,119 +131,53 @@
       animation: fadeInUp 0.8s var(--ease-out-expo) 0.2s forwards;
     }
 
-    .hero-tagline {
+    .name-section__tagline {
       font-family: var(--font-body);
       font-size: var(--text-caption);
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.15em;
       color: rgba(255, 255, 255, 0.5);
-      margin-bottom: var(--space-xl);
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 0.7s var(--ease-out-expo) 0.4s forwards;
     }
 
-    /* ===== HERO IMAGE ===== */
-    .hero-image-container {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      border-radius: 4px;
-      overflow: hidden;
-      opacity: 0;
-      animation: fadeIn 1s var(--ease-out-expo) 0.6s forwards;
-    }
-
-    .hero-image {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      display: block;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      gap: var(--space-md);
-    }
-
-    .hero-overlay-text {
-      font-family: var(--font-display);
-      font-size: clamp(48px, 12vw, 120px);
-      font-weight: 700;
-      color: var(--color-volt);
-      text-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
-      line-height: 0.9;
-    }
-
-    /* Scroll indicator */
-    .scroll-indicator {
-      position: absolute;
-      bottom: var(--space-lg);
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-xs);
-      opacity: 0;
-      animation: fadeIn 0.6s var(--ease-out-expo) 1.2s forwards;
-    }
-
-    .scroll-indicator span {
-      font-family: var(--font-body);
-      font-size: var(--text-caption);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: rgba(255, 255, 255, 0.4);
-    }
-
-    .scroll-indicator::after {
-      content: '';
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50% { opacity: 0.8; transform: scaleY(1.2); }
-    }
-
-    /* ===== PHILOSOPHY ZONE ===== */
-    .philosophy {
+    /* ===== TERRITORY SECTION (split: text left, diagram right) ===== */
+    .territory {
       background: var(--color-black);
       padding: var(--space-xl) var(--space-lg);
-      display: flex;
-      justify-content: center;
     }
 
-    .philosophy-content {
-      max-width: 800px;
+    .territory__content {
+      max-width: 1200px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: var(--space-xl);
+      align-items: center;
     }
 
-    .philosophy-block {
+    .territory__text {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .territory__block {
       opacity: 0;
       transform: translateY(30px);
     }
 
-    .philosophy-block.visible {
+    .territory__block.visible {
       animation: fadeInUp 0.7s var(--ease-out-expo) forwards;
     }
 
-    .philosophy-block:nth-child(2).visible {
+    .territory__block:nth-child(2).visible {
       animation-delay: 0.15s;
     }
 
-    .philosophy-label {
+    .territory__label {
       font-family: var(--font-body);
       font-size: var(--text-caption);
       text-transform: uppercase;
@@ -219,12 +186,113 @@
       margin-bottom: var(--space-sm);
     }
 
-    .philosophy-text {
+    .territory__value {
       font-family: var(--font-display);
       font-size: var(--text-title);
       font-weight: 600;
       line-height: 1.2;
       color: var(--color-white);
+    }
+
+    /* ===== 4-CIRCLE VENN DIAGRAM ===== */
+    .territory__diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+    }
+
+    .territory__diagram.visible {
+      animation: fadeIn 1s var(--ease-out-expo) forwards;
+    }
+
+    .venn {
+      position: relative;
+      width: 320px;
+      height: 320px;
+    }
+
+    .venn__circle {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+    }
+
+    .venn__circle--top {
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .venn__circle--bottom {
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .venn__circle--left {
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .venn__circle--right {
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .venn__label {
+      position: absolute;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .venn__label--top {
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .venn__label--bottom {
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .venn__label--left {
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .venn__label--right {
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .venn__burst {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, var(--color-volt) 0%, rgba(226, 255, 0, 0.4) 40%, transparent 70%);
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
     }
 
     /* ===== WORK ZONE ===== */
@@ -434,23 +502,39 @@
     }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      .hero {
-        padding: var(--space-lg) var(--space-md);
-        min-height: 90vh;
-      }
-
-      .hero-image-container {
-        max-width: 100%;
-      }
-
-      .hero-overlay-text {
-        font-size: clamp(32px, 10vw, 60px);
-      }
-
-      .philosophy-content {
+    @media (max-width: 900px) {
+      .territory__content {
         grid-template-columns: 1fr;
         gap: var(--space-lg);
+      }
+
+      .territory__diagram {
+        order: -1;
+      }
+
+      .venn {
+        width: 280px;
+        height: 280px;
+      }
+
+      .venn__circle {
+        width: 140px;
+        height: 140px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .photo-hero {
+        min-height: 50vh;
+      }
+
+      .photo-hero__text {
+        font-size: clamp(40px, 12vw, 80px);
+      }
+
+      .name-section,
+      .territory {
+        padding: var(--space-lg) var(--space-md);
       }
 
       .work,
@@ -469,10 +553,6 @@
       .footer-contact {
         align-items: flex-start;
       }
-
-      .scroll-indicator {
-        display: none;
-      }
     }
 
     /* ===== REDUCED MOTION ===== */
@@ -485,10 +565,11 @@
         transition-duration: 0.01ms !important;
       }
 
-      .hero-name,
-      .hero-tagline,
-      .hero-image-container,
-      .philosophy-block,
+      .photo-hero__overlay,
+      .name-section__name,
+      .name-section__tagline,
+      .territory__block,
+      .territory__diagram,
       .work-header,
       .card,
       .footer-content {
@@ -500,34 +581,49 @@
 </head>
 <body>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1 class="hero-name">Igor Schwarzmann</h1>
-    <p class="hero-tagline">Research & Strategy</p>
-
-    <div class="hero-image-container">
-      <img src="images/hero.jpg" alt="Igor Schwarzmann" class="hero-image">
-      <div class="hero-overlay">
-        <span class="hero-overlay-text">"THE</span>
-        <span class="hero-overlay-text">NEW"</span>
-      </div>
-    </div>
-
-    <div class="scroll-indicator">
-      <span>Explore</span>
+  <!-- PHOTO HERO (full bleed) -->
+  <section class="photo-hero">
+    <img src="images/hero.jpg" alt="Igor Schwarzmann" class="photo-hero__image">
+    <div class="photo-hero__overlay">
+      <span class="photo-hero__text">"THE</span>
+      <span class="photo-hero__text">NEW"</span>
     </div>
   </section>
 
-  <!-- PHILOSOPHY -->
-  <section class="philosophy">
-    <div class="philosophy-content">
-      <div class="philosophy-block">
-        <p class="philosophy-label">Positioning</p>
-        <p class="philosophy-text">Culture. Technology.<br>Pattern recognition.</p>
+  <!-- NAME SECTION -->
+  <section class="name-section">
+    <h1 class="name-section__name">Igor Schwarzmann</h1>
+    <p class="name-section__tagline">Research & Strategy</p>
+  </section>
+
+  <!-- TERRITORY (Positioning/Philosophy + Venn diagram) -->
+  <section class="territory">
+    <div class="territory__content">
+      <div class="territory__text">
+        <div class="territory__block">
+          <p class="territory__label">Positioning</p>
+          <p class="territory__value">Culture. Technology.<br>Pattern recognition.</p>
+        </div>
+        <div class="territory__block">
+          <p class="territory__label">Philosophy</p>
+          <p class="territory__value">Everything to someone.<br>Not something to everyone.</p>
+        </div>
       </div>
-      <div class="philosophy-block">
-        <p class="philosophy-label">Philosophy</p>
-        <p class="philosophy-text">Everything to someone.<br>Not something to everyone.</p>
+
+      <div class="territory__diagram">
+        <div class="venn">
+          <div class="venn__circle venn__circle--top"></div>
+          <div class="venn__circle venn__circle--bottom"></div>
+          <div class="venn__circle venn__circle--left"></div>
+          <div class="venn__circle venn__circle--right"></div>
+
+          <span class="venn__label venn__label--top">Culture</span>
+          <span class="venn__label venn__label--bottom">Tech</span>
+          <span class="venn__label venn__label--left">Decoding</span>
+          <span class="venn__label venn__label--right">Building</span>
+
+          <div class="venn__burst"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -600,7 +696,7 @@
       });
     }, observerOptions);
 
-    document.querySelectorAll('.philosophy-block, .work-header, .card, .footer-content').forEach(el => {
+    document.querySelectorAll('.territory__block, .territory__diagram, .work-header, .card, .footer-content').forEach(el => {
       observer.observe(el);
     });
   </script>
