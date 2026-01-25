@@ -73,42 +73,38 @@
       text-decoration: none;
     }
 
-    /* ===== PHOTO HERO (full bleed) ===== */
-    .photo-hero {
-      position: relative;
-      width: 100%;
-      min-height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* ===== MANIFESTO STRIP ===== */
+    .manifesto-strip {
+      background: #FF1493; /* Hot pink - bold cut through */
+      padding: var(--space-md) var(--space-lg);
+      text-align: center;
       overflow: hidden;
     }
 
-    .photo-hero__image {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .manifesto-strip__text {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 3vw, 28px);
+      font-weight: 700;
+      color: var(--color-white);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ===== PHOTO SECTION (bottom) ===== */
+    .photo-section {
+      position: relative;
+      width: 100%;
+      height: 50vh;
+      overflow: hidden;
+    }
+
+    .photo-section__image {
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-
-    .photo-hero__overlay {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      gap: var(--space-md);
-      opacity: 0;
-      animation: fadeIn 1s var(--ease-out-expo) 0.3s forwards;
-    }
-
-    .photo-hero__text {
-      font-family: var(--font-display);
-      font-size: clamp(56px, 14vw, 140px);
-      font-weight: 700;
-      color: var(--color-volt);
-      text-shadow: 0 4px 60px rgba(0, 0, 0, 0.6);
-      line-height: 0.9;
+      object-position: center top;
+      filter: grayscale(20%);
     }
 
     /* ===== NAME SECTION ===== */
@@ -524,12 +520,8 @@
     }
 
     @media (max-width: 768px) {
-      .photo-hero {
-        min-height: 50vh;
-      }
-
-      .photo-hero__text {
-        font-size: clamp(40px, 12vw, 80px);
+      .photo-section {
+        height: 40vh;
       }
 
       .name-section,
@@ -565,7 +557,6 @@
         transition-duration: 0.01ms !important;
       }
 
-      .photo-hero__overlay,
       .name-section__name,
       .name-section__tagline,
       .territory__block,
@@ -581,32 +572,24 @@
 </head>
 <body>
 
-  <!-- PHOTO HERO (full bleed) -->
-  <section class="photo-hero">
-    <img src="images/hero.jpg" alt="Igor Schwarzmann" class="photo-hero__image">
-    <div class="photo-hero__overlay">
-      <span class="photo-hero__text">"THE</span>
-      <span class="photo-hero__text">NEW"</span>
-    </div>
-  </section>
-
   <!-- NAME SECTION -->
   <section class="name-section">
     <h1 class="name-section__name">Igor Schwarzmann</h1>
     <p class="name-section__tagline">Research & Strategy</p>
   </section>
 
-  <!-- TERRITORY (Positioning/Philosophy + Venn diagram) -->
+  <!-- MANIFESTO STRIP -->
+  <section class="manifesto-strip">
+    <p class="manifesto-strip__text">Everything to someone. Not something to everyone.</p>
+  </section>
+
+  <!-- TERRITORY (Positioning + Venn diagram) -->
   <section class="territory">
     <div class="territory__content">
       <div class="territory__text">
         <div class="territory__block">
           <p class="territory__label">Positioning</p>
           <p class="territory__value">Culture. Technology.<br>Pattern recognition.</p>
-        </div>
-        <div class="territory__block">
-          <p class="territory__label">Philosophy</p>
-          <p class="territory__value">Everything to someone.<br>Not something to everyone.</p>
         </div>
       </div>
 
@@ -664,6 +647,11 @@
       </a>
 
     </div>
+  </section>
+
+  <!-- PHOTO SECTION -->
+  <section class="photo-section">
+    <img src="images/hero.jpg" alt="Igor Schwarzmann" class="photo-section__image">
   </section>
 
   <!-- FOOTER -->
