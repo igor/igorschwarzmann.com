@@ -76,7 +76,7 @@
     /* ===== MANIFESTO STRIP ===== */
     .manifesto-strip {
       background: #FF1493;
-      padding: var(--space-md) var(--space-md);
+      padding: var(--space-sm) var(--space-md);
       overflow: hidden;
       display: flex;
       justify-content: center;
@@ -85,12 +85,12 @@
 
     .manifesto-strip__text {
       font-family: var(--font-display);
-      font-size: clamp(14px, 3.2vw, 48px);
-      font-weight: 700;
+      font-size: clamp(20px, 4.5vw, 64px);
+      font-weight: 800;
       color: var(--color-white);
       text-transform: uppercase;
       text-align: center;
-      line-height: 1.2;
+      line-height: 1;
       max-width: 100%;
       white-space: nowrap;
     }
@@ -102,7 +102,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: var(--space-md) var(--space-lg) var(--space-md);
+      padding: var(--space-md) var(--space-lg) var(--space-sm);
       position: relative;
     }
 
@@ -142,7 +142,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: var(--space-md) 0;
+      padding: var(--space-sm) 0;
     }
 
     .hero__statement {
@@ -254,12 +254,12 @@
     /* Small screens (mobile) */
     @media (max-width: 768px) {
       .hero {
-        padding: var(--space-sm) var(--space-md) var(--space-sm);
+        padding: var(--space-sm) var(--space-md) var(--space-xs);
       }
 
       .hero__top {
         flex-direction: column;
-        gap: var(--space-sm);
+        gap: var(--space-xs);
       }
 
       .hero__contact {
@@ -275,11 +275,11 @@
       }
 
       .manifesto-strip {
-        padding: var(--space-md) var(--space-sm);
+        padding: var(--space-xs) var(--space-xs);
       }
 
       .manifesto-strip__text {
-        font-size: clamp(11px, 2.8vw, 20px);
+        font-size: clamp(13px, 3.8vw, 28px);
       }
 
       .impressum {
