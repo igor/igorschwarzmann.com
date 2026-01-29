@@ -76,18 +76,22 @@
     /* ===== MANIFESTO STRIP ===== */
     .manifesto-strip {
       background: #FF1493;
-      padding: var(--space-sm) 0;
+      padding: var(--space-md) var(--space-md);
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .manifesto-strip__text {
       font-family: var(--font-display);
-      font-size: clamp(24px, 5vw, 48px);
+      font-size: clamp(18px, 4vw, 48px);
       font-weight: 700;
       color: var(--color-white);
       text-transform: uppercase;
-      white-space: nowrap;
-      padding: 0 var(--space-sm);
+      text-align: center;
+      line-height: 1.2;
+      max-width: 100%;
     }
 
     /* ===== HERO SECTION (full viewport) ===== */
@@ -97,7 +101,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: var(--space-lg);
+      padding: var(--space-md) var(--space-lg) var(--space-md);
       position: relative;
     }
 
@@ -137,7 +141,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: var(--space-xl) 0;
+      padding: var(--space-lg) 0;
     }
 
     .hero__statement {
@@ -207,7 +211,7 @@
     .impressum {
       background: var(--color-black);
       color: var(--color-white);
-      padding: var(--space-lg) var(--space-lg);
+      padding: var(--space-xl) var(--space-lg);
     }
 
     .impressum-content {
@@ -249,7 +253,7 @@
     /* Small screens (mobile) */
     @media (max-width: 768px) {
       .hero {
-        padding: var(--space-md);
+        padding: var(--space-sm) var(--space-md) var(--space-sm);
       }
 
       .hero__top {
@@ -265,8 +269,16 @@
         font-size: clamp(32px, 9vw, 70px);
       }
 
+      .manifesto-strip {
+        padding: var(--space-md) var(--space-sm);
+      }
+
+      .manifesto-strip__text {
+        font-size: clamp(16px, 3.5vw, 24px);
+      }
+
       .impressum {
-        padding: var(--space-lg) var(--space-md);
+        padding: var(--space-xl) var(--space-md);
       }
     }
 
@@ -300,7 +312,7 @@
     </div>
 
     <div class="hero__statements">
-      <h1 class="hero__statement">Senior Advisor & Strategist</h1>
+      <h1 class="hero__statement">Advisor & Strategist</h1>
       <p class="hero__statement">Culture × Tech × AI</p>
       <p class="hero__statement">Systems & Narratives</p>
       <p class="hero__statement">For What's Coming</p>
@@ -313,7 +325,7 @@
 
   <!-- MANIFESTO STRIP -->
   <section class="manifesto-strip">
-    <p class="manifesto-strip__text">Everything to someone. Not something to everyone.</p>
+    <p class="manifesto-strip__text">EVERYTHING TO SOMEONE NOT SOMETHING TO EVERYONE</p>
   </section>
 
   <!-- IMPRESSUM -->
