@@ -12,7 +12,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Darker+Grotesque:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -27,8 +27,9 @@
       --color-gray-light: #E5E5E5;
 
       /* Typography */
-      --font-display: 'Darker Grotesque', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'IBM Plex Sans', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
 
       /* Type Scale */
       --text-hero: clamp(48px, 10vw, 96px);
@@ -63,10 +64,29 @@
 
     body {
       font-family: var(--font-body);
-      background: var(--color-black);
+      background:
+        radial-gradient(circle at 15% 85%, rgba(226, 255, 0, 0.02) 0%, transparent 40%),
+        radial-gradient(circle at 85% 15%, rgba(255, 20, 147, 0.015) 0%, transparent 40%),
+        #0A0A0A;
       color: var(--color-white);
       line-height: 1.5;
       padding-bottom: 60px;
+      position: relative;
+    }
+
+    /* Subtle grain texture */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.015;
+      pointer-events: none;
+      z-index: 100;
+      mix-blend-mode: overlay;
     }
 
     a {
@@ -115,26 +135,36 @@
     }
 
     .hero__name {
-      font-family: var(--font-display);
-      font-size: clamp(24px, 4vw, 36px);
-      font-weight: 600;
+      font-family: var(--font-mono);
+      font-size: clamp(11px, 1.2vw, 13px);
+      font-weight: 500;
       color: var(--color-volt);
       line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.9;
     }
 
     .hero__contact {
-      font-family: var(--font-body);
-      font-size: var(--text-caption);
-      font-weight: 500;
+      font-family: var(--font-mono);
+      font-size: clamp(10px, 1vw, 11px);
+      font-weight: 400;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: rgba(255, 255, 255, 0.6);
+      letter-spacing: 0.15em;
+      color: rgba(255, 255, 255, 0.3);
       text-decoration: none;
-      transition: color 0.3s ease;
+      border: 1px solid rgba(226, 255, 0, 0.15);
+      padding: 6px 12px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
     }
 
     .hero__contact:hover {
-      color: var(--color-volt);
+      color: var(--color-black);
+      background: var(--color-volt);
+      border-color: var(--color-volt);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(226, 255, 0, 0.2);
     }
 
     /* Center: big statements */
@@ -149,10 +179,17 @@
       font-family: var(--font-display);
       font-size: clamp(40px, 9vw, 140px);
       font-weight: 700;
-      line-height: 0.95;
+      line-height: 0.92;
       color: var(--color-white);
       text-transform: uppercase;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero__statement:hover {
+      color: var(--color-volt);
+      transform: translateX(8px);
+      text-shadow: 0 0 40px rgba(226, 255, 0, 0.3);
     }
 
     /* Meta info - sits below statements */
