@@ -66,6 +66,7 @@
       background: var(--color-black);
       color: var(--color-white);
       line-height: 1.5;
+      padding-bottom: 60px;
     }
 
     a {
@@ -211,21 +212,29 @@
     .impressum {
       background: var(--color-black);
       color: var(--color-white);
-      padding: var(--space-xl) var(--space-lg);
+      padding: var(--space-sm) var(--space-md);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
     }
 
     .impressum-content {
-      max-width: 1200px;
+      max-width: 100%;
       display: flex;
-      flex-direction: column;
-      gap: var(--space-xs);
+      flex-direction: row;
+      gap: var(--space-sm);
+      justify-content: center;
+      flex-wrap: nowrap;
     }
 
     .impressum-text {
       font-family: var(--font-body);
-      font-size: var(--text-caption);
+      font-size: clamp(8px, 0.9vw, 10px);
       color: rgba(255, 255, 255, 0.5);
-      line-height: 1.6;
+      line-height: 1.4;
+      white-space: nowrap;
     }
 
     /* ===== ANIMATIONS ===== */
@@ -253,17 +262,18 @@
     /* Small screens (mobile) */
     @media (max-width: 768px) {
       .hero {
-        padding: var(--space-md) var(--space-md) var(--space-md);
-        gap: var(--space-md);
+        padding: var(--space-md) var(--space-md) calc(var(--space-xl) + 40px);
+        gap: var(--space-lg);
       }
 
       .hero__top {
-        flex-direction: column;
-        gap: var(--space-xs);
+        flex-direction: row;
+        gap: var(--space-md);
       }
 
       .hero__contact {
         align-self: flex-start;
+        white-space: nowrap;
       }
 
       .hero__statements {
@@ -274,8 +284,12 @@
         font-size: clamp(28px, 7.5vw, 60px);
       }
 
+      .hero__meta-line {
+        font-size: clamp(12px, 1.5vw, 14px);
+      }
+
       .manifesto-strip {
-        padding: var(--space-xs) var(--space-xs);
+        padding: var(--space-md) var(--space-xs);
       }
 
       .manifesto-strip__text {
@@ -283,7 +297,12 @@
       }
 
       .impressum {
-        padding: var(--space-xl) var(--space-md);
+        padding: var(--space-xs) var(--space-sm);
+      }
+
+      .impressum-content {
+        flex-direction: column;
+        gap: 2px;
       }
     }
 
