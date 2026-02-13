@@ -1,0 +1,49 @@
+---
+---
+<footer class="impressum">
+  <div class="impressum-content">
+    <p class="impressum-text">Known Unknowns GmbH &middot; Fregestr. 65 &middot; 12159 Berlin</p>
+    <p class="impressum-text">Gesch&auml;ftsf&uuml;hrer: Igor Schwarzmann &middot; Amtsgericht Charlottenburg &middot; <a href="mailto:hello@igorschwarzmann.com">hello@igorschwarzmann.com</a></p>
+  </div>
+</footer>
+
+<style>
+  .impressum {
+    background: var(--color-black, #000);
+    color: var(--color-white, #fff);
+    padding: var(--space-sm, 16px) var(--space-md, 24px);
+  }
+
+  .impressum-content {
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-sm, 16px);
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+
+  .impressum-text {
+    font-family: var(--font-body, 'IBM Plex Sans', sans-serif);
+    font-size: clamp(8px, 0.9vw, 10px);
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  .impressum-text a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    .impressum {
+      padding: var(--space-xs, 8px) var(--space-sm, 16px);
+    }
+
+    .impressum-content {
+      flex-direction: column;
+      gap: 2px;
+    }
+  }
+</style>

@@ -1,0 +1,220 @@
+---
+import EssayLayout from '../../../layouts/EssayLayout.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://igorschwarzmann.com/strategyasprotocol/custodian-shift/#article",
+      "headline": "The Custodian Shift",
+      "description": "What happens when the most important role carries the least prestige? On AI, custodianship, and the role organizations need but nobody wants to name.",
+      "author": { "@id": "https://igorschwarzmann.com/#person" },
+      "publisher": { "@id": "https://igorschwarzmann.com/#org" },
+      "datePublished": "2026-02-01",
+      "dateModified": "2026-02-13",
+      "isPartOf": { "@id": "https://igorschwarzmann.com/strategyasprotocol/#collection" },
+      "mainEntityOfPage": "https://igorschwarzmann.com/strategyasprotocol/custodian-shift/"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://igorschwarzmann.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Strategy-as-Protocol", "item": "https://igorschwarzmann.com/strategyasprotocol/" },
+        { "@type": "ListItem", "position": 3, "name": "The Custodian Shift", "item": "https://igorschwarzmann.com/strategyasprotocol/custodian-shift/" }
+      ]
+    }
+  ]
+};
+---
+
+<EssayLayout
+  title="The Custodian Shift — Igor Schwarzmann"
+  description="What happens when the most important role carries the least prestige? On AI, custodianship, and the role organizations need but nobody wants to name."
+  ogTitle="The Custodian Shift"
+  ogDescription="What happens when the most important role carries the least prestige?"
+  canonicalUrl="https://igorschwarzmann.com/strategyasprotocol/custodian-shift/"
+  twitterTitle="The Custodian Shift — Igor Schwarzmann"
+  twitterDescription="What happens when the most important role carries the least prestige? On AI, custodianship, and the role organizations need but nobody wants to name."
+  structuredData={structuredData}
+>
+
+    <article>
+        <!-- Header -->
+        <header class="essay-header">
+            <div class="essay-meta">
+                <a href="/strategyasprotocol" class="essay-meta__link">Strategy-as-Protocol</a>
+                <span class="essay-meta__separator">/</span>
+                <time datetime="2026-02">February 2026</time>
+                <span class="essay-meta__separator">/</span>
+                <span>10 min read</span>
+            </div>
+            <h1>The Custodian Shift</h1>
+            <p class="essay-deck">What happens when the most important role carries the least prestige?</p>
+        </header>
+
+        <!-- Intro / context -->
+        <div class="essay-intro">
+            <p>A few weeks ago, I argued that <a href="https://open.substack.com/pub/igors/p/strategy-as-protocol">strategy should become a protocol</a> — explicit, readable by humans, executable by machines. That essay explored what happens when you make strategic logic transparent. This one asks the question it left open: if AI handles the execution, what does the human actually do?</p>
+            <p>The answer is less comfortable than most people want it to be.</p>
+        </div>
+
+        <div class="essay-intro-border"><hr></div>
+
+        <!-- Body -->
+        <div class="essay-body">
+
+            <p>Every organization tells itself a story about who matters most. The CEO who makes the call. The founder who ships the product. The strategist who produces the insight. These are hero roles — the ones that carry prestige, that get profiled, that justify the title.</p>
+
+            <!-- Margin annotation: OpenAI's context architecture -->
+            <figure class="essay-figure">
+                <div class="essay-figure__image">
+                    <img src="openai.jpeg" alt="OpenAI internal project file structure showing structured documentation architecture — AGENTS.md, ARCHITECTURE.md, docs with design-docs, exec-plans, product-specs, references" loading="lazy">
+                </div>
+                <figcaption>OpenAI internal team's documentation architecture, via <a href="https://www.linkedin.com/posts/fdaudens_an-internal-team-at-openai-built-a-product-activity-7427746268824625152-50Hl">Florent Daudens</a></figcaption>
+            </figure>
+
+            <p>Florent Daudens, writing about AI and media, recently <a href="https://www.linkedin.com/posts/fdaudens_an-internal-team-at-openai-built-a-product-activity-7427746268824625152-50Hl">documented something that quietly undermines all of them</a>. An internal team at OpenAI built a product with one million lines of code. Zero written by humans. The engineers never touched the code. Instead, they designed the environment in which AI agents could do reliable work.</p>
+
+            <p>When something broke, the question was never <em>"how do I fix this?"</em></p>
+
+            <p>It was <em>"what's missing that would let the agent fix it?"</em></p>
+
+            <p>That's not engineering. That's not execution. That's a fundamentally different posture — one that most organizations have no name for, no career track toward, and no incentive to adopt.</p>
+
+            <p>Chor Pharn, writing about systemic succession in <a href="https://thecuttingfloor.substack.com/p/succession">The Cutting Floor</a>, has a word for it: <strong>custodianship.</strong></p>
+
+
+            <h2>What the Engineers Actually Learned</h2>
+
+            <p>They started by writing one massive instruction file containing every rule, convention, and standard. It backfired. The AI couldn't tell what mattered. Too much guidance became non-guidance — the equivalent of an organization where everything is a priority, so nothing is.</p>
+
+            <p>Their fix was structural: a concise overview file that acts as a table of contents, pointing to deeper documentation organized by topic. Architecture here, design principles there, quality standards somewhere else. The agent starts with a small map and knows where to look when it needs more. Progressive disclosure — the same principle that makes good strategy communicable.</p>
+
+            <p>They also discovered that 20% of their week was spent cleaning up drift — patterns the AI replicated poorly, conventions it gradually forgot. Every Friday, engineers manually fixed what had degraded. That didn't scale. So they encoded what they called "golden principles" and built automated agents that scan for drift daily. Garbage collection for AI-generated work.</p>
+
+            <p>But the deepest insight was about context. The biggest bottleneck wasn't the AI's capability. It was what the AI could <em>see</em>. The Slack thread where the team aligned on a decision. The brainstorm in a Google Doc. The style nobody wrote down. None of it existed for the AI. Their solution: push everything into written, structured, findable artifacts. Treat context like infrastructure.</p>
+
+            <p>In my earlier essay, I argued that you cannot delegate what you cannot articulate. The OpenAI team confirmed this — and added a nuance I'd missed: <strong>you also can't articulate everything.</strong> The map works precisely because it isn't the territory. The custodian's skill is knowing what to make explicit and what to leave as structured space for expertise to operate within.</p>
+
+
+            <h2>Repositioning, Not Replacement</h2>
+
+            <!-- Margin annotation: Chor Pharn's Succession essay -->
+            <figure class="essay-figure">
+                <div class="essay-figure__image">
+                    <a href="https://thecuttingfloor.substack.com/p/succession">
+                        <img src="chor-pharn-succession.jpg" alt="Chor Pharn's Succession essay in The Cutting Floor Newsletter — on living through systemic replacement without collapse" loading="lazy">
+                    </a>
+                </div>
+                <figcaption>Chor Pharn, <a href="https://thecuttingfloor.substack.com/p/succession"><em>Succession</em></a> — The Cutting Floor</figcaption>
+            </figure>
+
+            <p>Most conversations about AI and work ask the wrong question. <em>Will we be replaced?</em></p>
+
+            <p>Chor Pharn's full argument goes further. Replacement is the wrong metaphor entirely. What we're living through is not a crisis of who does the work, but a transition in what human agency means:</p>
+
+            <blockquote>
+                <p>"The human role becomes custodial: deciding when to stop, when to refuse, when to accept loss rather than pursue brittle efficiency."</p>
+                <cite>Chor Pharn, The Cutting Floor</cite>
+            </blockquote>
+
+            <p>For organizations, this is repositioning. For the people who currently hold the hero roles — whose identity, compensation, and status are built on being the protagonist — it feels like demotion. That's not a misunderstanding. It's the reason most organizations won't make this shift voluntarily.</p>
+
+            <p>The entire career structure of most organizations rewards execution: <em>you shipped it, you closed it, you delivered it.</em> Custodianship operates on a different axis. The custodian doesn't ask <em>"is this done?"</em> but <em>"are the conditions right for this to be done well?"</em> Not <em>"did we hit the target?"</em> but <em>"is the target still the right one?"</em></p>
+
+            <p>Chris Argyris called this the difference between single-loop and double-loop learning. Single-loop fixes problems within existing frameworks. Double-loop questions the frameworks themselves. Most organizations never get to double-loop — not because they lack intelligence, but because no one is tending the space where frameworks get questioned.</p>
+
+            <p>The custodian tends that space.</p>
+
+
+            <h2>The Carrier Bag, Not the Spear</h2>
+
+            <p>We lack a good story for this role because our dominant narratives are wrong for it.</p>
+
+            <!-- Margin annotation: Le Guin book cover -->
+            <figure class="essay-figure essay-figure--book">
+                <div class="essay-figure__image">
+                    <img src="carrier-bag-leguin.jpg" alt="Book cover: The Carrier Bag Theory of Fiction by Ursula K. Le Guin, introduced by Donna Haraway" loading="lazy">
+                </div>
+                <figcaption>Le Guin, <em>The Carrier Bag Theory of Fiction</em> (1986), introduced by Donna Haraway</figcaption>
+            </figure>
+
+            <p>Ursula K. Le Guin diagnosed this in her 1986 essay <a href="https://www.ursulakleguin.com/the-carrier-bag-theory-of-fiction"><em>The Carrier Bag Theory of Fiction</em></a>. The hero narrative tells us the first and most important human tool was the weapon — the spear, the stick, the thing that kills. Le Guin argues it was the container: a leaf, a gourd, a shell, a net, a bag. The thing that brings energy home.</p>
+
+            <blockquote>
+                <p>"Before the tool that forces energy outward, we made the tool that brings energy home."</p>
+                <cite>Ursula K. Le Guin</cite>
+            </blockquote>
+
+            <p>The spear makes a dramatic story. The kill, the conquest, the decisive act. The bag makes a boring one. Gathering. Carrying. Holding things in relation to each other. No climax, no hero, no trophy.</p>
+
+            <p>But without the bag, the hunt is pointless. You can't carry the food back. You can't feed anyone. The dramatic act means nothing without the container that makes it usable.</p>
+
+            <p>The CEO is the spear. The custodian is the carrier bag.</p>
+
+            <p>Strategy-as-protocol is a carrier bag. It holds decisions, frameworks, trade-offs. It gathers context from across an organization and keeps it in usable relation. Nobody writes epics about bags (unless you count The Devil Wears Prada as an epic. Also did you see the trailer for the sequel? I am excited.) But the organization that has one — explicit, tended, maintained — will outlast the one running on heroic execution.</p>
+
+
+            <h2>The Oldest New Role</h2>
+
+            <p>Custodianship isn't new. It's the oldest model of organizational longevity — we just forgot it.</p>
+
+            <p>The German <em>Mittelstand</em> — family-owned companies that form the backbone of Europe's largest economy — have operated on custodial logic for generations. The prestige isn't in the individual. It's in the continuity. You're not celebrated for what you built. You're trusted for what you kept alive.</p>
+
+            <p>Japanese <em>shinise</em> — centuries-old family businesses — take this further. Hoshi Ryokan has been tending a hot spring since 718 AD, now in its 46th generation. When no blood heir is fit to lead, they adopt one. The function matters more than the lineage. The role outlives the person.</p>
+
+            <p>And Aboriginal Australian custodianship inverts the relationship entirely: the land owns you, not the other way around. You don't hold the system. You tend it. You are responsible for something you didn't create and won't outlast.</p>
+
+            <p>Three cultures, unrelated traditions, same insight: the thing that endures is never the hero. It's the practice of tending.</p>
+
+            <p>AI doesn't invent custodianship. It makes it necessary for organizations that never had it. The startup that scaled on heroic execution now needs someone to tend the protocol — the decision logic, the quality standards, the context that compounds over time. The consultancy that ran on individual brilliance now needs someone to maintain the environment where brilliance doesn't just flash but accumulates.</p>
+
+            <p>The question is whether organizations built on a different story — the Silicon Valley hero story, the quarterly-earnings story, the founder-genius story — can learn to value what these traditions always knew: that survival is a practice, not an event.</p>
+
+
+            <div class="word-break">
+                <p class="word-break__words"><span class="word-break__word word-break__word--volt"><span class="word-break__root">custod</span><span class="word-break__suffix">y</span></span><span class="word-break__dot">.</span> <span class="word-break__word word-break__word--signal"><span class="word-break__root">custod</span><span class="word-break__suffix">ial</span></span><span class="word-break__dot">.</span> <span class="word-break__word word-break__word--shift"><span class="word-break__root">custod</span><span class="word-break__suffix">ian</span></span><span class="word-break__dot">.</span></p>
+                <div class="word-break__etym">
+                    <span><em>custos</em> — guard, keeper</span>
+                    <span><em>-ian</em> — one who</span>
+                </div>
+            </div>
+
+            <h2>Who Tends the Protocol?</h2>
+
+            <p>So who is the custodian?</p>
+
+            <p>Not the CEO. The role is defined by representation and performance — quarterly results, investor narratives, public persona. Custodianship requires a different timescale.</p>
+
+            <p>Not the CTO. Technology is the medium, not the mission. Custodianship is about organizational logic, not infrastructure.</p>
+
+            <p>Not the Chief Strategy Officer. Strategy production is not strategy tending. Writing the protocol is not the same as maintaining the conditions under which it stays honest.</p>
+
+            <p>The custodian is a temporal role. Temporal in both senses: concerned with time — longevity, durability, generational thinking — and possibly temporary in any given organization, because the function matters more than the title.</p>
+
+            <p>What the custodian actually does: detects when protocols have drifted from reality. Decides which constraints are load-bearing and which are just habit. Ensures the carrier bag holds — that context stays structured, decisions stay traceable, and the environment remains fit for good work.</p>
+
+            <p>Most organizations don't have this role. The closest equivalent might be the board — shareholders theoretically interested in the longevity of the enterprise. But boards operate at the wrong altitude. The custodial function needs to be embedded in the daily work, not reviewed quarterly.</p>
+
+            <p>The organizations that figure out where to place this function — and give it genuine authority — will outlast. The ones that can't will keep optimizing execution while the conditions underneath quietly degrade.</p>
+
+            <p>The question isn't whether your organization needs a custodian.</p>
+
+            <p>It's whether it's willing to grant authority to a role that will never make the cover of a magazine.</p>
+
+        </div>
+
+        <!-- Separator -->
+        <div class="essay-separator">
+            <hr>
+        </div>
+
+        <!-- Author bio -->
+        <footer class="essay-footer">
+            <p>Igor Schwarzmann is an advisor and strategist working at the intersection of culture and technology — systems and narratives for what's coming. 15 years across Health, Automotive, Luxury, FMCG &amp; Finance across Europe, US &amp; Asia.</p>
+            <p>If you're navigating the shift from execution to custodianship — in your organization or your own practice — <a href="mailto:hello@igorschwarzmann.com">reach out</a>.</p>
+        </footer>
+    </article>
+
+</EssayLayout>
