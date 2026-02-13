@@ -1,0 +1,24 @@
+# Igor Schwarzmann — Research & Strategy
+
+> Igor Schwarzmann is an independent strategic consultant based in Berlin, specializing in cultural research, AI strategy, and organizational design. 20 years of experience across Health, Automotive, Luxury, FMCG & Finance in Europe, US & Asia. Company: Known Unknowns GmbH.
+
+## Core Pages
+- [Homepage](https://igorschwarzmann.com/): Portfolio of strategic consulting work across culture and technology
+- [Strategy-as-Protocol](https://igorschwarzmann.com/strategyasprotocol/): Framework for making strategy executable, transparent, and creative
+
+## Writing
+- [Strategy-as-Protocol](https://igorschwarzmann.com/strategyasprotocol/strategy-as-protocol/): Making strategy executable by humans and machines — explicit decision logic in plain language
+- [The Custodian Shift](https://igorschwarzmann.com/strategyasprotocol/custodian-shift/): How organizations transition from hero-driven to system-driven leadership
+- [The Evolution of Design Systems](https://igorschwarzmann.com/strategyasprotocol/designsystems/): From component libraries to organizational operating systems
+- [Brain Dead](https://github.com/igor/braindead): Open source architecture for AI-powered knowledge work
+
+## Podcast
+- [Follow the Rabbit (FtR Pod)](https://open.spotify.com/show/4uGvU1zXR9P6UsrPWRwsX0): Podcast exploring cultural shifts, emerging trends, and strategic thinking
+
+## Background
+- Co-founded Third Wave GmbH (2010), acquired by Edenspiekermann (2022)
+- Former Senior Director of Strategic Design at Edenspiekermann
+- Clients include Volkswagen, Mercedes, Deutsche Telekom, Novo Nordisk, WWF
+- Speaker: re:publica, DLD AI Summit, SXSW, NEXT
+- Featured in The New Yorker, The Guardian, ZDF, ntv
+- Contact: hello@igorschwarzmann.com
