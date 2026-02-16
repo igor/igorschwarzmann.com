@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <title>From Commodity to Cultural Code | Igor Schwarzmann</title>
+  <meta name="description" content="How soap became a status symbol: A case study in category transformation, aspiration compression, and the new economics of visibility.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Darker+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-volt: #E2FF00;
+      --color-signal: #00FF00;
+      --color-shift: #FF00FF;
+      --color-white: #FFFFFF;
+      --color-black: #000000;
+      --color-blush: #F5F0EB;
+      --color-gray: #888888;
+
+      --font-display: 'Darker Grotesque', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+
+      --text-hero: clamp(56px, 10vw, 120px);
+      --text-display: clamp(40px, 6vw, 72px);
+      --text-title: clamp(28px, 4vw, 48px);
+      --text-lead: clamp(20px, 2.5vw, 28px);
+      --text-body: clamp(16px, 1.8vw, 20px);
+      --text-caption: clamp(12px, 1.2vw, 14px);
+
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 48px;
+      --space-xl: 96px;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      line-height: 1.5;
+      color: var(--color-black);
+      background: var(--color-black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0.015;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 0.95;
+      max-width: 20ch;
+    }
+
+    /* ---- SLIDES ---- */
+    .deck { width: 100%; }
+
+    .slide {
+      width: 100vw;
+      min-height: 70vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-xl) var(--space-lg);
+      overflow: hidden;
+    }
+
+    .slide--hero { min-height: 100vh; }
+
+    .bg-white { background: var(--color-white); color: var(--color-black); }
+    .bg-black { background: var(--color-black); color: var(--color-white); }
+    .bg-volt { background: var(--color-volt); color: var(--color-black); }
+    .bg-signal { background: var(--color-signal); color: var(--color-black); }
+    .bg-shift { background: var(--color-shift); color: var(--color-white); }
+    .bg-blush { background: var(--color-blush); color: var(--color-black); }
+
+    /* ---- FRAME ---- */
+    .frame { position: relative; }
+
+    .frame[data-section]::before {
+      content: attr(data-section);
+      position: absolute;
+      top: var(--space-md);
+      left: 180px;
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+    }
+
+    .frame-context {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-lg);
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+    }
+
+    .frame-page {
+      position: absolute;
+      bottom: var(--space-md);
+      left: 180px;
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      opacity: 0.6;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .frame-page::before,
+    .frame-page::after {
+      content: '';
+      width: 48px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .frame-author {
+      position: absolute;
+      bottom: var(--space-md);
+      right: var(--space-lg);
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      opacity: 0.6;
+    }
+
+    /* ---- TYPOGRAPHY ---- */
+    .text-hero { font-family: var(--font-display); font-size: var(--text-hero); font-weight: 800; line-height: 0.9; }
+    .text-display { font-family: var(--font-display); font-size: var(--text-display); font-weight: 700; line-height: 0.95; }
+    .text-title { font-family: var(--font-display); font-size: var(--text-title); font-weight: 600; line-height: 1; }
+    .text-lead { font-family: var(--font-body); font-size: var(--text-lead); line-height: 1.4; max-width: 55ch; }
+    .text-body { font-family: var(--font-body); font-size: var(--text-body); line-height: 1.5; max-width: 55ch; }
+    .text-caption { font-family: var(--font-body); font-size: var(--text-caption); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .highlight-volt {
+      background: linear-gradient(180deg, transparent 60%, var(--color-volt) 60%);
+      padding: 0 4px;
+      color: inherit;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+    .highlight-shift {
+      background: linear-gradient(180deg, transparent 60%, var(--color-shift) 60%);
+      padding: 0 4px;
+      color: inherit;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+
+    .content-center { max-width: 1200px; margin: 0 auto; width: 100%; }
+
+    /* ---- DATA POINTS ---- */
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-lg);
+      margin: var(--space-lg) 0;
+    }
+
+    .data-point {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.6s var(--ease-out-expo) forwards;
+    }
+
+    .data-point:nth-child(1) { animation-delay: 0.1s; }
+    .data-point:nth-child(2) { animation-delay: 0.2s; }
+    .data-point:nth-child(3) { animation-delay: 0.3s; }
+    .data-point:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .data-number {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 80px);
+      font-weight: 800;
+      line-height: 1;
+      color: var(--color-volt);
+    }
+
+    .bg-volt .data-number,
+    .bg-signal .data-number { color: var(--color-black); }
+    .bg-black .data-number { color: var(--color-volt); }
+
+    .data-label {
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+      margin-top: var(--space-xs);
+    }
+
+    .data-detail {
+      font-size: var(--text-body);
+      margin-top: var(--space-xs);
+      opacity: 0.85;
+    }
+
+    /* ---- CASCADE DIAGRAM ---- */
+    .cascade-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 900px;
+      margin: var(--space-lg) 0;
+    }
+
+    .cascade-level {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      padding-left: var(--space-xl);
+      position: relative;
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
+      animation: cascadeLevel 0.5s var(--ease-out-expo) forwards;
+    }
+
+    .cascade-level::before {
+      content: '↓';
+      position: absolute;
+      left: var(--space-sm);
+      font-size: 24px;
+      opacity: 0.5;
+    }
+
+    .cascade-level:nth-child(1) { animation-delay: 0.15s; }
+    .cascade-level:nth-child(2) { animation-delay: 0.35s; }
+    .cascade-level:nth-child(3) { animation-delay: 0.55s; }
+    .cascade-level:nth-child(4) { animation-delay: 0.75s; }
+
+    @keyframes cascadeLevel {
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .cascade-level--blocked {
+      background: rgba(255,255,255,0.08);
+      border-left: 4px solid var(--color-gray);
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .cascade-level--blocked.cascade-level {
+      animation: cascadeLevelBlocked 0.5s var(--ease-out-expo) forwards;
+    }
+
+    @keyframes cascadeLevelBlocked {
+      to { opacity: 0.5; transform: translateY(0) scale(1); }
+    }
+
+    .cascade-level--strained {
+      background: rgba(255, 0, 255, 0.1);
+      border-left: 4px solid var(--color-shift);
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .cascade-level--strained.cascade-level {
+      animation: cascadeLevelBlocked 0.5s var(--ease-out-expo) forwards;
+    }
+
+    .cascade-level--thriving {
+      background: rgba(226,255,0,0.15);
+      border-left: 4px solid var(--color-volt);
+    }
+
+    .cascade-level--emerging {
+      background: rgba(0,255,0,0.12);
+      border-left: 4px solid var(--color-signal);
+    }
+
+    .cascade-label {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .cascade-status {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+    }
+
+    .cascade-price {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      opacity: 0.5;
+    }
+
+    /* ---- INTERVENTION CARDS ---- */
+    .interventions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+
+    .intervention {
+      padding: var(--space-lg);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.95);
+      animation: cardIn 0.5s var(--ease-out-expo) forwards;
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .intervention:hover {
+      transform: translateY(-3px) scale(1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .intervention:nth-child(1) { animation-delay: 0.1s; background: rgba(226,255,0,0.08); border-left: 4px solid var(--color-volt); }
+    .intervention:nth-child(2) { animation-delay: 0.2s; background: rgba(0,255,0,0.06); border-left: 4px solid var(--color-signal); }
+    .intervention:nth-child(3) { animation-delay: 0.3s; background: rgba(255,0,255,0.06); border-left: 4px solid var(--color-shift); }
+    .intervention:nth-child(4) { animation-delay: 0.4s; background: rgba(0,0,0,0.04); border-left: 4px solid var(--color-black); }
+
+    @keyframes cardIn {
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .intervention-number {
+      font-family: var(--font-display);
+      font-size: var(--text-display);
+      font-weight: 800;
+      opacity: 0.12;
+      position: absolute;
+      top: var(--space-xs);
+      right: var(--space-md);
+    }
+
+    .intervention h4 {
+      font-family: var(--font-display);
+      font-size: var(--text-lead);
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+    }
+
+    .intervention p {
+      font-size: var(--text-body);
+      opacity: 0.8;
+      max-width: 40ch;
+    }
+
+    /* ---- TIMELINE TABLE ---- */
+    .timeline-table {
+      width: 100%;
+      max-width: 900px;
+      border-collapse: collapse;
+      margin: var(--space-lg) 0;
+    }
+
+    .timeline-table th {
+      font-family: var(--font-display);
+      font-size: var(--text-caption);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: left;
+      padding: var(--space-sm);
+      border-bottom: 2px solid currentColor;
+    }
+
+    .timeline-table td {
+      padding: var(--space-sm);
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      font-size: 15px;
+      line-height: 1.5;
+      vertical-align: top;
+    }
+
+    .bg-black .timeline-table td { border-color: rgba(255,255,255,0.1); }
+
+    .timeline-table td:first-child { font-weight: 700; width: 20%; }
+    .timeline-table td:nth-child(2) { width: 15%; opacity: 0.6; }
+
+    /* ---- PIPELINE ---- */
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+
+    .pipeline-step {
+      text-align: center;
+      padding: var(--space-lg) var(--space-md);
+      background: rgba(0,0,0,0.03);
+      position: relative;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: pipeIn 0.5s var(--ease-out-expo) forwards;
+    }
+
+    .pipeline-step:nth-child(1) { animation-delay: 0.1s; }
+    .pipeline-step:nth-child(2) { animation-delay: 0.25s; }
+    .pipeline-step:nth-child(3) { animation-delay: 0.4s; }
+
+    .pipeline-step::after {
+      content: '→';
+      position: absolute;
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      color: var(--color-volt);
+      z-index: 2;
+    }
+
+    .pipeline-step:last-child::after { display: none; }
+
+    @keyframes pipeIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .pipeline-icon {
+      font-size: 32px;
+      margin-bottom: var(--space-sm);
+    }
+
+    .pipeline-step h4 {
+      font-family: var(--font-display);
+      font-size: var(--text-lead);
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+    }
+
+    .pipeline-step p {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    /* ---- TAKEAWAYS ---- */
+    .takeaways {
+      display: grid;
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+      max-width: 900px;
+    }
+
+    .takeaway {
+      display: flex;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background: rgba(255,255,255,0.05);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s var(--ease-out-expo) forwards;
+    }
+
+    .takeaway:nth-child(1) { animation-delay: 0.1s; }
+    .takeaway:nth-child(2) { animation-delay: 0.2s; }
+    .takeaway:nth-child(3) { animation-delay: 0.3s; }
+    .takeaway:nth-child(4) { animation-delay: 0.4s; }
+    .takeaway:nth-child(5) { animation-delay: 0.5s; }
+
+    .takeaway-number {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: 800;
+      color: var(--color-volt);
+      min-width: 50px;
+    }
+
+    .takeaway h4 {
+      font-family: var(--font-display);
+      font-size: var(--text-lead);
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+    }
+
+    .takeaway p {
+      font-size: var(--text-body);
+      opacity: 0.75;
+    }
+
+    /* ---- SOCIAL PROOF ITEMS ---- */
+    .social-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+
+    .social-item {
+      padding: var(--space-md);
+      border: 1px solid rgba(0,0,0,0.1);
+      opacity: 0;
+      animation: fadeUp 0.4s var(--ease-out-expo) forwards;
+    }
+
+    .social-item:nth-child(1) { animation-delay: 0.1s; }
+    .social-item:nth-child(2) { animation-delay: 0.2s; }
+    .social-item:nth-child(3) { animation-delay: 0.3s; }
+    .social-item:nth-child(4) { animation-delay: 0.4s; }
+
+    .social-item h4 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+    }
+
+    .social-item p {
+      font-size: 13px;
+      opacity: 0.7;
+      line-height: 1.4;
+    }
+
+    /* ---- TIMELINE ---- */
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: var(--space-lg) 0;
+      padding-left: 60px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(
+        to bottom,
+        var(--color-gray) 0%,
+        var(--color-gray) 30%,
+        var(--color-volt) 50%,
+        var(--color-shift) 70%,
+        var(--color-signal) 100%
+      );
+    }
+
+    .tl-item {
+      position: relative;
+      padding-bottom: var(--space-md);
+      opacity: 0;
+      transform: translateX(-15px);
+      animation: tlIn 0.5s var(--ease-out-expo) forwards;
+    }
+
+    .tl-item:nth-child(1)  { animation-delay: 0.05s; }
+    .tl-item:nth-child(2)  { animation-delay: 0.1s; }
+    .tl-item:nth-child(3)  { animation-delay: 0.15s; }
+    .tl-item:nth-child(4)  { animation-delay: 0.2s; }
+    .tl-item:nth-child(5)  { animation-delay: 0.25s; }
+    .tl-item:nth-child(6)  { animation-delay: 0.3s; }
+    .tl-item:nth-child(7)  { animation-delay: 0.35s; }
+    .tl-item:nth-child(8)  { animation-delay: 0.4s; }
+    .tl-item:nth-child(9)  { animation-delay: 0.45s; }
+    .tl-item:nth-child(10) { animation-delay: 0.5s; }
+    .tl-item:nth-child(11) { animation-delay: 0.55s; }
+
+    @keyframes tlIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .tl-dot {
+      position: absolute;
+      left: -44px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--color-gray);
+      border: 2px solid var(--color-black);
+      z-index: 2;
+    }
+
+    .tl-item--origin .tl-dot   { background: var(--color-gray); }
+    .tl-item--design .tl-dot   { background: var(--color-gray); }
+    .tl-item--aesop .tl-dot    { background: var(--color-volt); width: 16px; height: 16px; left: -46px; top: 2px; box-shadow: 0 0 12px rgba(226,255,0,0.5); }
+    .tl-item--brand .tl-dot    { background: var(--color-volt); }
+    .tl-item--culture .tl-dot  { background: var(--color-shift); }
+    .tl-item--covid .tl-dot    { background: var(--color-shift); width: 16px; height: 16px; left: -46px; top: 2px; box-shadow: 0 0 12px rgba(255,0,255,0.5); }
+    .tl-item--acquire .tl-dot  { background: var(--color-signal); width: 16px; height: 16px; left: -46px; top: 2px; box-shadow: 0 0 12px rgba(0,255,0,0.5); }
+    .tl-item--future .tl-dot   { background: var(--color-signal); }
+
+    .tl-year {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      opacity: 0.5;
+      margin-bottom: 2px;
+    }
+
+    .tl-title {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+
+    .tl-desc {
+      font-size: 14px;
+      opacity: 0.6;
+      line-height: 1.4;
+    }
+
+    .tl-item--aesop .tl-title  { color: var(--color-volt); }
+    .tl-item--covid .tl-title  { color: var(--color-shift); }
+    .tl-item--acquire .tl-title { color: var(--color-signal); }
+
+    /* ---- SPLIT LAYOUT ---- */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+    }
+
+    /* ---- TRANSFORMATION ---- */
+    .transform-before {
+      font-family: var(--font-display);
+      font-size: 0.85em;
+      font-weight: 400;
+      opacity: 0.35;
+      text-decoration: line-through;
+    }
+
+    .transform-after {
+      font-family: var(--font-display);
+      font-size: 1.4em;
+      font-weight: 700;
+      color: var(--color-volt);
+      line-height: 1.1;
+    }
+
+    /* ---- THUMBNAIL PANEL ---- */
+    .thumbnail-panel {
+      position: fixed;
+      top: 0; left: 0;
+      width: 140px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(24px);
+      z-index: 200;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: var(--space-sm);
+      transform: translateX(0);
+      transition: transform 0.4s var(--ease-out-expo);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .thumbnail-panel.collapsed { transform: translateX(-100%); }
+
+    .thumbnail-panel::-webkit-scrollbar { width: 4px; }
+    .thumbnail-panel::-webkit-scrollbar-track { background: transparent; }
+    .thumbnail-panel::-webkit-scrollbar-thumb { background: rgba(226, 255, 0, 0.3); border-radius: 2px; }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-sm);
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .panel-title {
+      font-family: var(--font-body);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-volt);
+    }
+
+    .panel-close {
+      background: none; border: none;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 16px; cursor: pointer;
+      padding: 2px; line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .panel-close:hover { color: var(--color-volt); }
+
+    .thumbnail-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .thumbnail-item {
+      position: relative;
+      background: var(--color-white);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 2px solid transparent;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .thumbnail-item:hover { transform: scale(1.03); border-color: rgba(226, 255, 0, 0.4); }
+    .thumbnail-item.active { border-color: var(--color-volt); box-shadow: 0 3px 12px rgba(226, 255, 0, 0.35); }
+
+    .thumbnail-preview {
+      width: 100%; height: 44px;
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    .thumbnail-number {
+      font-family: var(--font-display);
+      font-size: 16px; font-weight: 700;
+    }
+
+    .thumbnail-preview.tp-black { background: var(--color-black); }
+    .thumbnail-preview.tp-black .thumbnail-number { color: rgba(255,255,255,0.6); }
+    .thumbnail-preview.tp-white { background: var(--color-white); }
+    .thumbnail-preview.tp-white .thumbnail-number { color: rgba(0,0,0,0.45); }
+    .thumbnail-preview.tp-volt { background: var(--color-volt); }
+    .thumbnail-preview.tp-volt .thumbnail-number { color: rgba(0,0,0,0.5); }
+    .thumbnail-preview.tp-shift { background: var(--color-shift); }
+    .thumbnail-preview.tp-shift .thumbnail-number { color: rgba(255,255,255,0.7); }
+    .thumbnail-preview.tp-blush { background: var(--color-blush); }
+    .thumbnail-preview.tp-blush .thumbnail-number { color: rgba(0,0,0,0.4); }
+    .thumbnail-preview.tp-signal { background: var(--color-signal); }
+    .thumbnail-preview.tp-signal .thumbnail-number { color: rgba(0,0,0,0.5); }
+
+    /* Toggle button */
+    .panel-toggle {
+      position: fixed;
+      top: var(--space-md); left: var(--space-md);
+      width: 44px; height: 44px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 300;
+      transition: all 0.3s ease;
+    }
+
+    .panel-toggle:hover { background: rgba(0,0,0,0.95); border-color: var(--color-volt); }
+    .panel-toggle svg { width: 20px; height: 20px; stroke: var(--color-white); transition: stroke 0.2s; }
+    .panel-toggle:hover svg { stroke: var(--color-volt); }
+    .panel-toggle.panel-open { left: 156px; transition: left 0.4s var(--ease-out-expo); }
+
+    /* Nav dots */
+    .nav-progress {
+      position: fixed;
+      top: 50%; right: var(--space-md);
+      transform: translateY(-50%);
+      display: flex; flex-direction: column;
+      gap: var(--space-xs);
+      z-index: 100;
+      opacity: 0.3;
+    }
+
+    .nav-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      border: none; cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-dot:hover { background: rgba(255,255,255,0.6); transform: scale(1.3); }
+    .nav-dot.active { background: var(--color-volt); transform: scale(1.5); }
+
+    /* Keyboard hint */
+    .keyboard-hint {
+      position: fixed;
+      bottom: var(--space-md);
+      left: 50%; transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      color: rgba(255,255,255,0.4);
+      display: flex; align-items: center; gap: var(--space-sm);
+      z-index: 100;
+      transition: opacity 0.5s ease;
+    }
+
+    .keyboard-hint.hidden { opacity: 0; pointer-events: none; }
+
+    .key {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 4px; font-size: 14px;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .slide { padding: var(--space-lg) var(--space-md); }
+      .interventions { grid-template-columns: 1fr; }
+      .split { grid-template-columns: 1fr; gap: var(--space-lg); }
+      .nav-progress, .thumbnail-panel, .panel-toggle { display: none; }
+      .frame[data-section]::before { left: var(--space-md); }
+      .frame-page { left: var(--space-md); }
+      .frame[data-section]::before, .frame-page, .frame-context, .frame-author { font-size: 10px; }
+      .pipeline-step::after { display: none; }
+    }
+
+    @media print {
+      html { scroll-snap-type: none; }
+      .slide { page-break-after: always; min-height: 100vh; scroll-snap-align: none; }
+      .nav-progress, .keyboard-hint, .thumbnail-panel, .panel-toggle { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toggle -->
+  <button class="panel-toggle panel-open" id="panelToggle" aria-label="Toggle slide thumbnails">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7"></rect>
+      <rect x="14" y="3" width="7" height="7"></rect>
+      <rect x="14" y="14" width="7" height="7"></rect>
+      <rect x="3" y="14" width="7" height="7"></rect>
+    </svg>
+  </button>
+
+  <!-- Thumbnail Panel -->
+  <aside class="thumbnail-panel" id="thumbnailPanel">
+    <div class="panel-header">
+      <span class="panel-title">Slides</span>
+      <button class="panel-close" aria-label="Close panel">×</button>
+    </div>
+    <nav class="thumbnail-list" aria-label="Slide thumbnails" id="thumbList"></nav>
+  </aside>
+
+  <!-- Nav dots -->
+  <nav class="nav-progress" aria-label="Slide navigation" id="navDots"></nav>
+
+  <div class="keyboard-hint" id="keyboardHint">
+    <span class="key">↑</span>
+    <span class="key">↓</span>
+    <span>or scroll to navigate</span>
+  </div>
+
+  <article class="deck">
+
+    <!-- SLIDE 1: TITLE -->
+    <section class="slide slide--hero bg-black" data-bg="tp-black">
+      <div class="content-center" style="display:flex;flex-direction:column;justify-content:flex-end;min-height:60vh;">
+        <h1 style="font-size:clamp(72px,14vw,200px);font-weight:800;line-height:0.85;max-width:none;letter-spacing:-0.02em;">
+          <span style="display:inline-block;opacity:0;transform:translateY(100%);animation:cascadeIn 0.8s var(--ease-out-expo) 0.1s forwards;">FROM</span><br>
+          <span style="display:inline-block;opacity:0;transform:translateY(100%);animation:cascadeIn 0.8s var(--ease-out-expo) 0.2s forwards;">COMMODITY</span><br>
+          <span style="display:inline-block;opacity:0;transform:translateY(100%);animation:cascadeIn 0.8s var(--ease-out-expo) 0.3s forwards;color:var(--color-volt);">TO CULTURAL CODE</span>
+        </h1>
+        <p style="font-size:var(--text-lead);opacity:0.7;margin-top:var(--space-md);max-width:500px;">How Soap Became a Status Symbol</p>
+      </div>
+      <span class="frame-author" style="color:var(--color-white);">Igor Schwarzmann</span>
+      <span class="frame-context" style="color:var(--color-white);">2026</span>
+
+      <style>
+        @keyframes cascadeIn { to { opacity:1; transform:translateY(0); } }
+      </style>
+    </section>
+
+    <!-- SLIDE 2: THE QUESTION -->
+    <section class="slide bg-white frame" data-section="Act I: The Question" data-bg="tp-white">
+      <span class="frame-page">02</span>
+      <span class="frame-context">The $2-to-$47 Question</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-lg);">In 2005, hand soap<br>cost <span class="highlight-volt">$2-4</span></h2>
+        <p class="text-lead" style="margin-bottom:var(--space-xl);opacity:0.7;">
+          It sat under the sink. Unbranded. Interchangeable. Nobody photographed their hand soap.
+        </p>
+
+        <div class="data-grid">
+          <div class="data-point">
+            <div class="data-number">$2.5B</div>
+            <div class="data-label">L'Oréal acquisition</div>
+            <div class="data-detail">Largest in L'Oréal history (2023)</div>
+          </div>
+          <div class="data-point">
+            <div class="data-number">21%</div>
+            <div class="data-label">Annual growth rate</div>
+            <div class="data-detail">Aesop hand & body CAGR</div>
+          </div>
+          <div class="data-point">
+            <div class="data-number">26s</div>
+            <div class="data-label">One balm sold</div>
+            <div class="data-detail">Every 26 seconds globally</div>
+          </div>
+          <div class="data-point">
+            <div class="data-number">#1</div>
+            <div class="data-label">Acquisition channel</div>
+            <div class="data-detail">Hand wash = top new customer entry in US</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: ASPIRATION CASCADE -->
+    <section class="slide bg-blush frame" data-section="Act I: The Question" data-bg="tp-blush">
+      <span class="frame-page">03</span>
+      <span class="frame-context">The Mechanism</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <p class="text-caption" style="opacity:0.5;margin-bottom:var(--space-sm);">The Aspiration Cascade</p>
+        <h2 class="text-display" style="margin-bottom:var(--space-lg);max-width:22ch;">This isn't trading down. This is <span class="highlight-volt">aspiration compression.</span></h2>
+
+        <p class="text-lead" style="margin-bottom:var(--space-lg);opacity:0.8;">
+          When consumers can't access macro-aspirations, they compress those aspirations into progressively smaller, emotionally concentrated purchases.
+        </p>
+
+        <div class="data-grid" style="max-width:800px;">
+          <div class="data-point">
+            <div class="data-number" style="color:var(--color-gray);font-size:clamp(32px,5vw,48px);">$420K</div>
+            <div class="data-label">Median US home price</div>
+            <div class="data-detail">Up 40%+ since 2019</div>
+          </div>
+          <div class="data-point">
+            <div class="data-number" style="color:var(--color-shift);font-size:clamp(32px,5vw,48px);">$15K+</div>
+            <div class="data-label">Bathroom renovation</div>
+            <div class="data-detail">Average $12K-$35K</div>
+          </div>
+          <div class="data-point">
+            <div class="data-number" style="font-size:clamp(32px,5vw,48px);">$47</div>
+            <div class="data-label">One bottle of Aesop</div>
+            <div class="data-detail">Resurrection Aromatique</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: HERO QUOTE -->
+    <section class="slide slide--hero bg-volt" data-bg="tp-volt">
+      <div class="content-center" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;">
+        <h2 style="font-family:var(--font-display);font-size:clamp(48px,9vw,140px);font-weight:800;line-height:0.9;max-width:14ch;">
+          I CAN'T RENOVATE MY BATHROOM
+        </h2>
+        <p style="font-size:var(--text-lead);margin-top:var(--space-lg);max-width:50ch;opacity:0.85;">
+          But I can put an Aesop bottle next to the sink. <strong>Same emotional need. $47 instead of $15,000.</strong>
+        </p>
+      </div>
+      <span class="frame-author" style="color:var(--color-black);">Igor Schwarzmann</span>
+    </section>
+
+    <!-- SLIDE 5: THE CASCADE PATH -->
+    <section class="slide bg-black frame" data-section="Act II: The Mechanism" data-bg="tp-black">
+      <span class="frame-page" style="color:var(--color-white);">05</span>
+      <span class="frame-context" style="color:var(--color-white);">Compression Path</span>
+      <span class="frame-author" style="color:var(--color-white);">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-sm);">The Aspiration</h2>
+        <h2 class="text-display" style="color:var(--color-volt);margin-bottom:var(--space-lg);">Compression Path</h2>
+
+        <div class="cascade-diagram">
+          <div class="cascade-level cascade-level--blocked">
+            <span class="cascade-label">Renovate the Bathroom</span>
+            <span class="cascade-price">$15,000+</span>
+            <span class="cascade-status">Blocked</span>
+          </div>
+          <div class="cascade-level cascade-level--strained">
+            <span class="cascade-label">Designer Bathroom Furniture</span>
+            <span class="cascade-price">$2,000+</span>
+            <span class="cascade-status">Strained</span>
+          </div>
+          <div class="cascade-level cascade-level--thriving">
+            <span class="cascade-label">Buy Aesop & Display It</span>
+            <span class="cascade-price">$47</span>
+            <span class="cascade-status">Thriving</span>
+          </div>
+          <div class="cascade-level cascade-level--emerging">
+            <span class="cascade-label">Post It on Instagram</span>
+            <span class="cascade-price">Free</span>
+            <span class="cascade-status">Multiplied</span>
+          </div>
+        </div>
+
+        <p class="text-lead" style="margin-top:var(--space-lg);color:var(--color-volt);font-style:italic;">
+          The gap between $15,000 and $47 is where the emotional surplus lives.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: BEFORE AESOP -->
+    <section class="slide bg-white frame" data-section="Act III: The Transformation" data-bg="tp-white">
+      <span class="frame-page">06</span>
+      <span class="frame-context">Before Aesop</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-lg);">The Category<br>Before Aesop</h2>
+
+        <table class="timeline-table">
+          <thead>
+            <tr><th>Dimension</th><th></th><th>Hand Soap Pre-2006</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Price</td><td></td><td>$2-4 commodity</td></tr>
+            <tr><td>Packaging</td><td></td><td>Generic PET plastic, white/clear bottles</td></tr>
+            <tr><td>Distribution</td><td></td><td>Drugstore shelf, B2B, private label</td></tr>
+            <tr><td>Cultural Surface</td><td></td><td>Zero — nobody photographs hand soap</td></tr>
+            <tr><td>Ritual</td><td></td><td>None — "use and forget"</td></tr>
+            <tr><td>Narrative</td><td></td><td>None — functional claim only</td></tr>
+            <tr><td>Competitive Moat</td><td></td><td>None — pure price competition</td></tr>
+          </tbody>
+        </table>
+
+        <p class="text-body" style="margin-top:var(--space-lg);opacity:0.6;">
+          Dominated by Unilever, P&G, Colgate-Palmolive, Reckitt Benckiser. Nobody was competing on culture.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: HERO - NO ADS -->
+    <section class="slide slide--hero bg-black" data-bg="tp-black">
+      <div class="content-center" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
+        <h2 class="text-hero" style="color:var(--color-white);max-width:none;">
+          NO ADS.<br>
+          <span style="color:var(--color-volt);">NO DISCOUNTS.</span><br>
+          NO INFLUENCERS.
+        </h2>
+        <p style="font-size:var(--text-lead);margin-top:var(--space-lg);opacity:0.5;max-width:45ch;">
+          Silence, poetry, and architectural retail.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: THE FOUR INTERVENTIONS -->
+    <section class="slide bg-white frame" data-section="Act III: The Transformation" data-bg="tp-white">
+      <span class="frame-page">08</span>
+      <span class="frame-context">The Aesop Intervention</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-md);">Four Simultaneous<br>Interventions</h2>
+        <p class="text-body" style="opacity:0.6;margin-bottom:var(--space-sm);">Not incremental improvement — category redefinition.</p>
+
+        <div class="interventions">
+          <div class="intervention">
+            <span class="intervention-number">1</span>
+            <h4>Packaging as Cultural Code</h4>
+            <p>Amber glass bottle with minimalist typography. Designed to be decoded — invisible to outsiders, instantly legible to insiders.</p>
+          </div>
+          <div class="intervention">
+            <span class="intervention-number">2</span>
+            <h4>Ingredient as Narrative</h4>
+            <p>Mandarin rind, rosemary leaf, cedar atlas. Names like Resurrection and Reverence. Literary weight, not functional claims.</p>
+          </div>
+          <div class="intervention">
+            <span class="intervention-number">3</span>
+            <h4>Retail as Architecture</h4>
+            <p>Each store uniquely designed. Sink installations where visitors wash hands with the product. 4,000-brick soap corridors.</p>
+          </div>
+          <div class="intervention">
+            <span class="intervention-number">4</span>
+            <h4>Anti-Marketing</h4>
+            <p>No ads, no discounts, no influencers. Discovery itself became a form of cultural capital. The product had to be found, not sold.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: HOSPITALITY PIPELINE -->
+    <section class="slide bg-blush frame" data-section="Act III: The Transformation" data-bg="tp-blush">
+      <span class="frame-page">09</span>
+      <span class="frame-context">Discovery Engine</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-md);">The Hospitality<br>Pipeline</h2>
+        <p class="text-lead" style="opacity:0.7;margin-bottom:var(--space-lg);">
+          A trial-to-purchase funnel disguised as hospitality.
+        </p>
+
+        <div class="pipeline">
+          <div class="pipeline-step">
+            <div class="pipeline-icon">🏨</div>
+            <h4>Discover</h4>
+            <p>Boutique hotel bathroom. Waldorf Astoria, 1 Hotels, Proper Hotels, cafés globally.</p>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-icon">✨</div>
+            <h4>Associate</h4>
+            <p>"This is how nice bathrooms smell." The context of taste imprints the brand.</p>
+          </div>
+          <div class="pipeline-step">
+            <div class="pipeline-icon">🏠</div>
+            <h4>Recreate</h4>
+            <p>Purchase to bring that feeling home — even if home is a 500 sq ft rental.</p>
+          </div>
+        </div>
+
+        <p class="text-body" style="margin-top:var(--space-lg);opacity:0.8;">
+          <strong>Result:</strong> Hand wash became Aesop's <span class="highlight-volt">#1 new customer acquisition category</span> in the US. People discovered Aesop while washing their hands at a hotel.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: CATEGORY FOLLOWS -->
+    <section class="slide bg-white frame" data-section="Act IV: The Category" data-bg="tp-white">
+      <span class="frame-page">10</span>
+      <span class="frame-context">The Category Follows</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-md);">Once Aesop Proved It,<br>Everyone Followed</h2>
+
+        <table class="timeline-table">
+          <thead>
+            <tr><th>Brand</th><th>Entry</th><th>Strategy</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Aesop</td><td>2006</td><td>Botanical narrative + architectural retail</td></tr>
+            <tr><td>Malin+Goetz</td><td>~2010</td><td>Apothecary minimalism, gender-neutral</td></tr>
+            <tr><td>Grown Alchemist</td><td>~2014</td><td>Science-forward, "biocompatible" storytelling</td></tr>
+            <tr><td>Byredo</td><td>~2018</td><td>Fragrance house prestige, transferred from perfume</td></tr>
+            <tr><td>Le Labo</td><td>~2019</td><td>Artisanal, city-specific — same model as fragrance</td></tr>
+            <tr><td>Diptyque</td><td>~2020</td><td>Extended from candle luxury into hand wash</td></tr>
+            <tr><td>Tom Ford</td><td>~2021</td><td>Ultra-premium, fashion-house prestige</td></tr>
+          </tbody>
+        </table>
+
+        <p class="text-body" style="margin-top:var(--space-lg);opacity:0.7;">
+          Each applied the same insight: <strong>hand soap is the lowest-friction entry point into a luxury brand universe.</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: TIMELINE -->
+    <section class="slide bg-black frame" data-section="Act IV: The Category" data-bg="tp-black">
+      <span class="frame-page" style="color:var(--color-white);">11</span>
+      <span class="frame-context" style="color:var(--color-white);">Timeline</span>
+      <span class="frame-author" style="color:var(--color-white);">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-md);">The Transformation<br>Timeline</h2>
+        <p class="text-body" style="opacity:0.5;margin-bottom:var(--space-sm);">From commodity aisle to cultural code — 20 years in 11 milestones.</p>
+
+        <div class="timeline">
+          <div class="tl-item tl-item--origin">
+            <div class="tl-dot"></div>
+            <div class="tl-year">1987</div>
+            <div class="tl-title">Aesop Founded</div>
+            <div class="tl-desc">Dennis Paphitis opens a hair salon in Melbourne. Begins blending botanical products.</div>
+          </div>
+
+          <div class="tl-item tl-item--design">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2000</div>
+            <div class="tl-title">Method Launches</div>
+            <div class="tl-desc">First design-forward soap brand. Proves aesthetics can move soap off the shelf and onto the countertop.</div>
+          </div>
+
+          <div class="tl-item tl-item--aesop">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2006</div>
+            <div class="tl-title">Resurrection Aromatique Hand Wash</div>
+            <div class="tl-desc">The product that redefines the category. Amber bottle. Mandarin rind. $40+ price point. No ads.</div>
+          </div>
+
+          <div class="tl-item tl-item--brand">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2010–14</div>
+            <div class="tl-title">First Followers Enter</div>
+            <div class="tl-desc">Malin+Goetz (~2010), Grown Alchemist (~2014). The premium hand care tier begins to form.</div>
+          </div>
+
+          <div class="tl-item tl-item--culture">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2015–16</div>
+            <div class="tl-title">#Shelfie Emerges on Instagram</div>
+            <div class="tl-desc">Bathroom shelves become content. The amber bottle becomes a visual shorthand for taste.</div>
+          </div>
+
+          <div class="tl-item tl-item--brand">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2018–19</div>
+            <div class="tl-title">Luxury Houses Enter</div>
+            <div class="tl-desc">Byredo (~2018) and Le Labo (~2019) bring fragrance-house prestige to hand wash.</div>
+          </div>
+
+          <div class="tl-item tl-item--culture">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2019</div>
+            <div class="tl-title">Aesop as Real Estate Prop</div>
+            <div class="tl-desc">Aesop bottles become standard in property staging and Airbnb listings. Visual signal of quality.</div>
+          </div>
+
+          <div class="tl-item tl-item--covid">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2020</div>
+            <div class="tl-title">COVID Makes Hand Washing a Ritual</div>
+            <div class="tl-desc">20-second washes. Home all day. Premium hand care goes mainstream. Diptyque expands to hand wash.</div>
+          </div>
+
+          <div class="tl-item tl-item--brand">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2021</div>
+            <div class="tl-title">Tom Ford Enters Hand Care</div>
+            <div class="tl-desc">Ultra-premium tier established. Fashion-house prestige applied to a once-commodity product.</div>
+          </div>
+
+          <div class="tl-item tl-item--acquire">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2023</div>
+            <div class="tl-title">L'Oréal Acquires Aesop for $2.5B</div>
+            <div class="tl-desc">Largest acquisition in L'Oréal history. Validates the entire category transformation.</div>
+          </div>
+
+          <div class="tl-item tl-item--future">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2025→</div>
+            <div class="tl-title">$25.3B → $48.4B Projected</div>
+            <div class="tl-desc">Premium and organic segments growing fastest. The new default: soap should mean something.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12: SOCIAL ACCELERANT -->
+    <section class="slide bg-white frame" data-section="Act IV: The Category" data-bg="tp-white">
+      <span class="frame-page">12</span>
+      <span class="frame-context">Visibility Mechanics</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-md);">The Bathroom<br>Became a Stage</h2>
+        <p class="text-lead" style="opacity:0.7;margin-bottom:var(--space-sm);">
+          Second-order visibility: the product is used in private, but the ritual becomes public.
+        </p>
+
+        <div class="social-items">
+          <div class="social-item" style="border-color:var(--color-volt);">
+            <h4>#shelfie</h4>
+            <p>Carefully arranged bathroom shelf photos. The amber bottle as taste marker.</p>
+          </div>
+          <div class="social-item" style="border-color:var(--color-signal);">
+            <h4>#GRWM</h4>
+            <p>"Get Ready With Me" — morning routines featuring premium hand/body care.</p>
+          </div>
+          <div class="social-item" style="border-color:var(--color-shift);">
+            <h4>Bathroom Tours</h4>
+            <p>The bathroom equivalent of "what's in my bag." Aesop as prop and product.</p>
+          </div>
+          <div class="social-item" style="border-color:var(--color-black);">
+            <h4>Property Staging</h4>
+            <p>Aesop bottles standard in real estate listings and Airbnb bathrooms. Visual shorthand for quality.</p>
+          </div>
+        </div>
+
+        <p class="text-body" style="margin-top:var(--space-lg);opacity:0.7;">
+          Aesop became the <strong>"bougie bathroom" status cue on TikTok</strong> — visual shorthand for taste and subtle affluence.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 13: COVID -->
+    <section class="slide bg-black frame" data-section="Act IV: The Category" data-bg="tp-black">
+      <span class="frame-page" style="color:var(--color-white);">13</span>
+      <span class="frame-context" style="color:var(--color-white);">The Accelerant</span>
+      <span class="frame-author" style="color:var(--color-white);">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-lg);">COVID Made<br>Hand Washing<br><span style="color:var(--color-signal);">A Ritual</span></h2>
+
+        <div class="data-grid" style="max-width:800px;">
+          <div class="data-point">
+            <div class="data-number">20s</div>
+            <div class="data-label">Minimum wash time</div>
+            <div class="data-detail">Long enough to notice what you're using</div>
+          </div>
+          <div class="data-point">
+            <div class="data-number">48%</div>
+            <div class="data-label">Of L'Occitane revenue</div>
+            <div class="data-detail">Prestige hand care during COVID era</div>
+          </div>
+          <div class="data-point">
+            <div class="data-number">$48B</div>
+            <div class="data-label">Projected by 2035</div>
+            <div class="data-detail">Global hand soap market (from $25.3B)</div>
+          </div>
+        </div>
+
+        <p class="text-lead" style="margin-top:var(--space-xl);opacity:0.7;">
+          When hand washing became a public health imperative, it also became <strong>frequent</strong>, <strong>ritualized</strong>, <strong>home-centered</strong>, and <strong>gift-worthy</strong>. Premium decoupled from niche.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 14: HERO — SHIFT -->
+    <section class="slide slide--hero bg-shift" data-bg="tp-shift">
+      <div class="content-center" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:center;">
+        <h2 class="text-hero" style="color:var(--color-white);max-width:16ch;">
+          THE BATHROOM IS NOW A CONTENT STAGE
+        </h2>
+      </div>
+      <span class="frame-author" style="color:var(--color-white);">Igor Schwarzmann</span>
+    </section>
+
+    <!-- SLIDE 15: MAPPING THE MIGRATION -->
+    <section class="slide bg-white frame" data-section="Act V: The Framework" data-bg="tp-white">
+      <span class="frame-page">15</span>
+      <span class="frame-context">Visibility Shift Matrix</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-lg);">Mapping the Migration</h2>
+
+        <div style="max-width:700px;margin:var(--space-lg) 0;font-family:var(--font-body);">
+          <!-- Migration diagram -->
+          <div style="display:flex;flex-direction:column;gap:var(--space-md);">
+            <div style="display:flex;align-items:center;gap:var(--space-md);">
+              <div style="padding:var(--space-md) var(--space-lg);background:var(--color-blush);flex:1;">
+                <div style="font-family:var(--font-display);font-size:20px;font-weight:700;">Pure Utility</div>
+                <div style="font-size:13px;opacity:0.6;">Generic hand soap, $2-4</div>
+              </div>
+              <div style="color:var(--color-volt);font-size:28px;font-weight:700;">→</div>
+              <div style="padding:var(--space-md) var(--space-lg);background:rgba(226,255,0,0.15);border-left:4px solid var(--color-volt);flex:1;">
+                <div style="font-family:var(--font-display);font-size:20px;font-weight:700;">Pop-Aesthetic Flex</div>
+                <div style="font-size:13px;opacity:0.6;">Method, ~2000 — proved design works</div>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:center;">
+              <div style="color:var(--color-shift);font-size:28px;font-weight:700;">↓</div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:var(--space-md);">
+              <div style="flex:1;"></div>
+              <div style="padding:var(--space-md) var(--space-lg);background:rgba(255,0,255,0.08);border-left:4px solid var(--color-shift);flex:1;">
+                <div style="font-family:var(--font-display);font-size:20px;font-weight:700;">Discreet Status Signals</div>
+                <div style="font-size:13px;opacity:0.6;">Aesop, Le Labo — IYKYK territory</div>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;padding-right:25%;">
+              <div style="color:var(--color-signal);font-size:28px;font-weight:700;">↓</div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:var(--space-md);">
+              <div style="flex:1;"></div>
+              <div style="padding:var(--space-md) var(--space-lg);background:rgba(0,255,0,0.08);border-left:4px solid var(--color-signal);flex:1;">
+                <div style="font-family:var(--font-display);font-size:20px;font-weight:700;">Identity Broadcast Engines</div>
+                <div style="font-size:13px;opacity:0.6;">Glossier, Touchland — visible performance</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-body" style="margin-top:var(--space-md);opacity:0.7;">
+          Aesop leapfrogged Pop-Aesthetic by going directly to IYKYK territory. The amber bottle was designed to be <strong>recognizable to the right people</strong> — not eye-catching for everyone.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 16: CULTURAL CAPITAL -->
+    <section class="slide bg-blush frame" data-section="Act V: The Framework" data-bg="tp-blush">
+      <span class="frame-page">16</span>
+      <span class="frame-context">Cultural Capital</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-title" style="margin-bottom:var(--space-lg);max-width:none;">The Cultural Capital Stack</h2>
+
+        <div style="display:grid;gap:var(--space-md);max-width:900px;">
+          <div style="display:grid;grid-template-columns:1fr 2fr;gap:var(--space-md);padding:var(--space-md);background:rgba(226,255,0,0.12);border-left:4px solid var(--color-volt);">
+            <div style="font-family:var(--font-display);font-size:20px;font-weight:700;">Heritage Capital</div>
+            <div style="font-size:15px;opacity:0.8;">Australian provenance, literary naming (Resurrection, Reverence), botanical expertise</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr;gap:var(--space-md);padding:var(--space-md);background:rgba(0,255,0,0.06);border-left:4px solid var(--color-signal);">
+            <div style="font-family:var(--font-display);font-size:20px;font-weight:700;">Aesthetic Capital</div>
+            <div style="font-size:15px;opacity:0.8;">Amber glass, typographic consistency, architectural retail — the bottle IS the brand</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr;gap:var(--space-md);padding:var(--space-md);background:rgba(255,0,255,0.06);border-left:4px solid var(--color-shift);">
+            <div style="font-family:var(--font-display);font-size:20px;font-weight:700;">Social Capital</div>
+            <div style="font-size:15px;opacity:0.8;">Shelfie culture, hospitality discovery, gifting rituals — each creates a new surface</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 2fr;gap:var(--space-md);padding:var(--space-md);background:rgba(0,0,0,0.04);border-left:4px solid var(--color-black);">
+            <div style="font-family:var(--font-display);font-size:20px;font-weight:700;">Price Capital</div>
+            <div style="font-size:15px;opacity:0.8;">$47 creates exclusion without extremity — expensive enough to signal, accessible enough to buy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 17: IMPLICATIONS -->
+    <section class="slide bg-black" data-bg="tp-black">
+      <span class="frame-page" style="color:var(--color-white);">17</span>
+      <span class="frame-context" style="color:var(--color-white);">Implications</span>
+      <span class="frame-author" style="color:var(--color-white);">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom:var(--space-lg);">The Template</h2>
+
+        <div class="takeaways">
+          <div class="takeaway">
+            <span class="takeaway-number">01</span>
+            <div>
+              <h4>Any commodity can be culturally elevated</h4>
+              <p>Redesign packaging, narrative, and ritual simultaneously — not incrementally.</p>
+            </div>
+          </div>
+          <div class="takeaway">
+            <span class="takeaway-number">02</span>
+            <div>
+              <h4>The aspiration cascade creates new tiers</h4>
+              <p>Blocked macro-aspirations drive premium prices for micro-versions of the same emotional satisfaction.</p>
+            </div>
+          </div>
+          <div class="takeaway">
+            <span class="takeaway-number">03</span>
+            <div>
+              <h4>Visibility has migrated to contextual spaces</h4>
+              <p>The bathroom is now as much a stage as the street. Private rooms become content surfaces.</p>
+            </div>
+          </div>
+          <div class="takeaway">
+            <span class="takeaway-number">04</span>
+            <div>
+              <h4>Hospitality is a product discovery channel</h4>
+              <p>Placing products in aspirational contexts converts users more effectively than advertising.</p>
+            </div>
+          </div>
+          <div class="takeaway">
+            <span class="takeaway-number">05</span>
+            <div>
+              <h4>$47 is a strategic sweet spot</h4>
+              <p>Expensive enough to signal taste, cheap enough to be an impulse-possible repeat purchase.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 18: CLOSING -->
+    <section class="slide slide--hero bg-volt" data-bg="tp-volt">
+      <div class="content-center" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;min-height:60vh;">
+        <h2 style="font-family:var(--font-display);font-size:clamp(72px,14vw,200px);font-weight:800;line-height:0.85;max-width:none;letter-spacing:-0.02em;">
+          FROM<br>COMMODITY<br>TO CULTURAL<br>CODE
+        </h2>
+        <p style="font-size:var(--text-lead);opacity:0.7;margin-top:var(--space-md);">igorschwarzmann.com</p>
+      </div>
+      <span class="frame-author" style="color:var(--color-black);">Igor Schwarzmann</span>
+      <span class="frame-context" style="color:var(--color-black);">2026</span>
+    </section>
+
+  </article>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const thumbnailPanel = document.getElementById('thumbnailPanel');
+    const panelToggle = document.getElementById('panelToggle');
+    const panelClose = document.querySelector('.panel-close');
+    const thumbList = document.getElementById('thumbList');
+    const navDotsContainer = document.getElementById('navDots');
+    const keyboardHint = document.getElementById('keyboardHint');
+    let currentSlide = 0;
+    let hasInteracted = false;
+
+    // Build thumbnails and dots dynamically
+    slides.forEach((slide, i) => {
+      const bg = slide.dataset.bg || 'tp-white';
+      const num = String(i + 1).padStart(2, '0');
+
+      // Thumbnail
+      const btn = document.createElement('button');
+      btn.className = `thumbnail-item${i === 0 ? ' active' : ''}`;
+      btn.dataset.slideIndex = i;
+      btn.innerHTML = `<div class="thumbnail-preview ${bg}"><span class="thumbnail-number">${num}</span></div>`;
+      thumbList.appendChild(btn);
+
+      // Nav dot
+      const dot = document.createElement('button');
+      dot.className = `nav-dot${i === 0 ? ' active' : ''}`;
+      dot.dataset.slide = i;
+      dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+      navDotsContainer.appendChild(dot);
+    });
+
+    const thumbnailItems = document.querySelectorAll('.thumbnail-item');
+    const navDots = document.querySelectorAll('.nav-dot');
+
+    function togglePanel() { thumbnailPanel.classList.toggle('collapsed'); }
+    panelToggle.addEventListener('click', togglePanel);
+    panelClose.addEventListener('click', togglePanel);
+
+    function updateNav() {
+      const scrollY = window.scrollY;
+      const wh = window.innerHeight;
+      slides.forEach((slide, i) => {
+        const top = slide.offsetTop;
+        const bottom = top + slide.offsetHeight;
+        if (scrollY >= top - wh / 2 && scrollY < bottom - wh / 2) {
+          currentSlide = i;
+          navDots.forEach((d, j) => d.classList.toggle('active', j === i));
+          thumbnailItems.forEach((t, j) => t.classList.toggle('active', j === i));
+          if (thumbnailItems[i]) thumbnailItems[i].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    }
+
+    function goToSlide(index) {
+      if (index >= 0 && index < slides.length) {
+        slides[index].scrollIntoView({ behavior: 'smooth' });
+        currentSlide = index;
+        hideHint();
+      }
+    }
+
+    function hideHint() {
+      if (!hasInteracted) { hasInteracted = true; keyboardHint.classList.add('hidden'); }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); goToSlide(currentSlide + 1); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); goToSlide(currentSlide - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); goToSlide(0); }
+      else if (e.key === 'End') { e.preventDefault(); goToSlide(slides.length - 1); }
+    });
+
+    navDotsContainer.addEventListener('click', (e) => {
+      const dot = e.target.closest('.nav-dot');
+      if (dot) goToSlide(parseInt(dot.dataset.slide));
+    });
+
+    thumbList.addEventListener('click', (e) => {
+      const item = e.target.closest('.thumbnail-item');
+      if (item) goToSlide(parseInt(item.dataset.slideIndex));
+    });
+
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateNav, 50);
+      hideHint();
+    }, { passive: true });
+
+    updateNav();
+  </script>
+
+</body>
+</html>
