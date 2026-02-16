@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>Visibility Shift Matrix | Strategic Framework</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Colors */
+      --volt: #E2FF00;
+      --signal: #00FF00;
+      --shift: #FF00FF;
+      --white: #FFFFFF;
+      --black: #000000;
+      --blush: #F5F0EB;
+
+      /* Typography */
+      --font-display: 'Darker Grotesque', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+
+      /* Spacing */
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 48px;
+      --space-xl: 96px;
+
+      /* Easing */
+      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Scroll snap */
+    .slide-container {
+      scroll-snap-type: y proximity;
+      overflow-y: scroll;
+      height: 100vh;
+    }
+
+    .slide {
+      scroll-snap-align: start;
+      min-height: 70vh;
+      padding: var(--space-lg);
+      position: relative;
+    }
+
+    .slide--hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .slide--full {
+      min-height: 100vh;
+    }
+
+    /* The Frame */
+    .frame {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .frame__corner {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+
+    .frame__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--space-lg);
+    }
+
+    .frame__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-top: var(--space-xl);
+      padding-top: var(--space-md);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .frame__page {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .frame__page::before,
+    .frame__page::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    /* Typography */
+    .text-hero {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 120px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      max-width: 20ch;
+    }
+
+    .text-display {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      max-width: 22ch;
+    }
+
+    .text-title {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3vw, 40px);
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+    }
+
+    .text-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: var(--space-sm);
+    }
+
+    .text-lead {
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.5;
+      max-width: 60ch;
+      margin-bottom: var(--space-md);
+    }
+
+    .text-body {
+      font-size: 16px;
+      line-height: 1.55;
+      max-width: 60ch;
+    }
+
+    .text-small {
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: 0.7;
+    }
+
+    /* Color utilities */
+    .bg-volt { background: var(--volt); color: var(--black); }
+    .bg-signal { background: var(--signal); color: var(--black); }
+    .bg-shift { background: var(--shift); color: var(--white); }
+    .bg-black { background: var(--black); color: var(--white); }
+    .bg-blush { background: var(--blush); }
+
+    .text-volt { color: var(--volt); }
+    .text-signal { color: var(--signal); }
+    .text-shift { color: var(--shift); }
+
+    .highlight-volt {
+      background: linear-gradient(180deg, transparent 60%, var(--volt) 60%);
+      padding: 0 4px;
+    }
+
+    /* Matrix diagram */
+    .matrix {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: var(--space-xl) auto;
+      aspect-ratio: 1 / 1;
+    }
+
+    .matrix__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 2px;
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--black);
+    }
+
+    .matrix__quadrant {
+      padding: var(--space-md);
+      border: 1px solid var(--black);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      background: var(--white);
+      transition: all 0.3s var(--ease-expo);
+    }
+
+    .matrix__quadrant:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      z-index: 10;
+    }
+
+    .matrix__label {
+      font-family: var(--font-display);
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+
+    .matrix__subtitle {
+      font-size: clamp(11px, 1.5vw, 13px);
+      font-weight: 500;
+      opacity: 0.6;
+      line-height: 1.3;
+    }
+
+    .matrix__examples {
+      font-size: clamp(10px, 1.2vw, 12px);
+      line-height: 1.5;
+      opacity: 0.8;
+      margin-top: auto;
+    }
+
+    .matrix__axes {
+      position: absolute;
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+    }
+
+    .matrix__axis-y {
+      left: -120px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center;
+    }
+
+    .matrix__axis-x {
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Quadrant detail sections */
+    .quadrant-detail {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .quadrant-header {
+      margin-bottom: var(--space-lg);
+    }
+
+    .quadrant-position {
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.5;
+      margin-bottom: var(--space-sm);
+    }
+
+    .patterns-table {
+      width: 100%;
+      margin: var(--space-lg) 0;
+      border-collapse: collapse;
+    }
+
+    .patterns-table th {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: left;
+      padding: var(--space-sm);
+      border-bottom: 2px solid var(--black);
+    }
+
+    .patterns-table td {
+      padding: var(--space-sm);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      font-size: 14px;
+      line-height: 1.5;
+      vertical-align: top;
+    }
+
+    .patterns-table td:first-child {
+      font-weight: 500;
+      width: 25%;
+    }
+
+    /* Examples list */
+    .examples-list {
+      display: grid;
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+
+    .example-item {
+      padding: var(--space-md);
+      border-left: 4px solid var(--volt);
+      background: var(--blush);
+    }
+
+    .example-item h4 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+    }
+
+    .example-item p {
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: 0.8;
+    }
+
+    /* Strategic insights */
+    .insights {
+      background: var(--blush);
+      padding: var(--space-lg);
+      margin: var(--space-lg) 0;
+      border-radius: 4px;
+    }
+
+    .insights h4 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+    }
+
+    .insights ul {
+      list-style: none;
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .insights li {
+      padding-left: var(--space-md);
+      position: relative;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .insights li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+    }
+
+    /* Grid layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-lg);
+      margin: var(--space-lg) 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+
+    /* Capital types table */
+    .capital-table {
+      display: grid;
+      gap: var(--space-md);
+      margin: var(--space-lg) 0;
+    }
+
+    .capital-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr 2fr;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background: var(--blush);
+      align-items: start;
+    }
+
+    .capital-row:nth-child(1) { border-left: 4px solid var(--volt); }
+    .capital-row:nth-child(2) { border-left: 4px solid var(--signal); }
+    .capital-row:nth-child(3) { border-left: 4px solid var(--shift); }
+    .capital-row:nth-child(4) { border-left: 4px solid var(--black); }
+
+    .capital-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .capital-def,
+    .capital-quadrants {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Migration paths */
+    .migration-path {
+      padding: var(--space-lg);
+      margin: var(--space-lg) 0;
+      border: 2px solid var(--black);
+      position: relative;
+    }
+
+    .migration-path h4 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+    }
+
+    .migration-arrow {
+      font-size: 32px;
+      margin: var(--space-sm) 0;
+      color: var(--volt);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .slide {
+        padding: var(--space-md);
+      }
+
+      .frame__top,
+      .frame__bottom {
+        font-size: 9px;
+      }
+
+      .matrix__axis-y {
+        left: -80px;
+      }
+
+      .matrix__axis-x {
+        bottom: -30px;
+      }
+
+      .capital-row {
+        grid-template-columns: 1fr;
+      }
+
+      .patterns-table {
+        font-size: 12px;
+      }
+
+      .patterns-table td:first-child {
+        width: 100%;
+      }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* Scroll progress indicator */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(0, 0, 0, 0.05);
+      z-index: 1000;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--volt);
+      width: 0%;
+      transition: width 0.1s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <div class="slide-container">
+
+    <!-- Title Slide -->
+    <section class="slide slide--hero bg-volt">
+      <h1 class="text-hero">Visibility Shift Matrix</h1>
+      <p class="text-lead" style="margin-top: var(--space-lg);">A framework for understanding how products become culturally significant beyond traditional public display</p>
+      <p class="text-small" style="margin-top: var(--space-lg); opacity: 0.6;">Strategic Framework — February 2026</p>
+    </section>
+
+    <!-- Executive Summary -->
+    <section class="slide slide--full">
+      <div class="frame">
+        <div class="frame__top">
+          <span class="frame__corner">Executive Summary</span>
+          <span class="frame__corner">Framework Overview</span>
+        </div>
+
+        <h2 class="text-display" style="margin-bottom: var(--space-lg);">
+          <span class="highlight-volt">Visibility is no longer purely about public display</span>
+        </h2>
+
+        <div class="text-body" style="max-width: 70ch;">
+          <p style="margin-bottom: var(--space-md);">
+            The Visibility Shift Matrix analyzes how products gain cultural resonance and become identity markers even when they're not worn or displayed on the body in public spaces.
+          </p>
+
+          <p style="margin-bottom: var(--space-md);">
+            This framework reveals that <strong>visibility is no longer purely about public display</strong>—it's about <strong>contextual presence</strong>, <strong>social storytelling</strong>, and <strong>cultural codes</strong>.
+          </p>
+
+          <p style="margin-bottom: var(--space-lg);">
+            Even private-use products (skincare, supplements, wellness items) can:
+          </p>
+
+          <ul style="list-style: none; margin-left: 0; margin-bottom: var(--space-lg);">
+            <li style="margin-bottom: var(--space-sm); padding-left: var(--space-md); position: relative;">
+              <span style="position: absolute; left: 0; color: var(--volt); font-weight: 700;">01</span>
+              <strong>Signal lifestyle</strong> through aesthetic packaging and narrative
+            </li>
+            <li style="margin-bottom: var(--space-sm); padding-left: var(--space-md); position: relative;">
+              <span style="position: absolute; left: 0; color: var(--signal); font-weight: 700;">02</span>
+              <strong>Become rituals</strong> that are shared socially
+            </li>
+            <li style="margin-bottom: var(--space-sm); padding-left: var(--space-md); position: relative;">
+              <span style="position: absolute; left: 0; color: var(--shift); font-weight: 700;">03</span>
+              <strong>Drive identity expression</strong> through consumption choices
+            </li>
+          </ul>
+
+          <p>
+            This framework provides strategic guidance for positioning products across four distinct cultural territories, each with unique patterns, challenges, and opportunities.
+          </p>
+        </div>
+
+        <div class="frame__bottom">
+          <div class="frame__page">
+            <span class="frame__corner">01</span>
+          </div>
+          <span class="frame__corner">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Matrix -->
+    <section class="slide slide--full bg-blush">
+      <div class="frame">
+        <div class="frame__top">
+          <span class="frame__corner">The Framework</span>
+          <span class="frame__corner">Visual Model</span>
+        </div>
+
+        <h2 class="text-display" style="margin-bottom: var(--space-md);">The Matrix</h2>
+        <p class="text-body" style="margin-bottom: var(--space-lg); opacity: 0.7;">
+          Four distinct cultural territories defined by visibility and expressiveness
+        </p>
+
+        <div class="matrix">
+          <div class="matrix__axes matrix__axis-y">High Cultural Expressiveness</div>
+          <div class="matrix__axes matrix__axis-x">High Visibility (Contextual Use) →</div>
+
+          <div class="matrix__grid">
+            <!-- Quadrant III: Top Left -->
+            <div class="matrix__quadrant">
+              <div class="matrix__label">Discreet Status Signals</div>
+              <div class="matrix__subtitle">"IYKYK Quiet Luxury"</div>
+              <div class="matrix__examples">
+                • Augustinus Bader<br>
+                • Aesop<br>
+                • Ranavat<br>
+                • Ffern
+              </div>
+            </div>
+
+            <!-- Quadrant IV: Top Right -->
+            <div class="matrix__quadrant">
+              <div class="matrix__label">Identity Broadcast Engines</div>
+              <div class="matrix__subtitle">"Cultural Billboards"</div>
+              <div class="matrix__examples">
+                • Glossier<br>
+                • Nike SNKRS<br>
+                • AirPods Max<br>
+                • Stanley Quencher
+              </div>
+            </div>
+
+            <!-- Quadrant I: Bottom Left -->
+            <div class="matrix__quadrant">
+              <div class="matrix__label">Pure Utility</div>
+              <div class="matrix__subtitle">"Functional Commodity"</div>
+              <div class="matrix__examples">
+                • Generic shampoo<br>
+                • White-label supplements<br>
+                • Bulk sanitizer
+              </div>
+            </div>
+
+            <!-- Quadrant II: Bottom Right -->
+            <div class="matrix__quadrant">
+              <div class="matrix__label">Pop-Aesthetic Flex</div>
+              <div class="matrix__subtitle">"Affordable Camera-Ready"</div>
+              <div class="matrix__examples">
+                • Touchland<br>
+                • Away luggage<br>
+                • Ritual vitamins
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="frame__bottom">
+          <div class="frame__page">
+            <span class="frame__corner">02</span>
+          </div>
+          <span class="frame__corner">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Axes Definition -->
+    <section class="slide">
+      <div class="frame">
+        <div class="frame__top">
+          <span class="frame__corner">The Framework</span>
+          <span class="frame__corner">Axes Defined</span>
+        </div>
+
+        <h2 class="text-title">Understanding the Axes</h2>
+
+        <div class="grid-2">
+          <div>
+            <h3 class="text-subtitle"><span class="text-volt">X-Axis:</span> Visibility Through Contextual Use</h3>
+            <p class="text-body" style="margin-bottom: var(--space-md);">
+              How a product becomes visible through packaging aesthetics, usage rituals, and social media presence.
+            </p>
+            <p class="text-small">Not about being worn on the body, but about appearing in:</p>
+            <ul style="margin-left: var(--space-md); margin-top: var(--space-sm); font-size: 14px; line-height: 1.5;">
+              <li>Bathroom/vanity "shelfies"</li>
+              <li>Morning routine videos</li>
+              <li>"What's in my bag" content</li>
+              <li>Unboxing and lifestyle photography</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-subtitle"><span class="text-signal">Y-Axis:</span> Cultural Expressiveness</h3>
+            <p class="text-body" style="margin-bottom: var(--space-md);">
+              How strongly the product signals identity, values, or status.
+            </p>
+            <p class="text-small">Measures:</p>
+            <ul style="margin-left: var(--space-md); margin-top: var(--space-sm); font-size: 14px; line-height: 1.5;">
+              <li>Contribution to personal storytelling</li>
+              <li>Lifestyle signaling intensity</li>
+              <li>Depth of narrative embedded in product</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="frame__bottom">
+          <div class="frame__page">
+            <span class="frame__corner">03</span>
+          </div>
+          <span class="frame__corner">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hero: Quadrants -->
+    <section class="slide slide--hero bg-black">
+      <h2 class="text-hero" style="color: var(--white);">
+        Four Territories.<br>
+        Four Strategies.
+      </h2>
+    </section>
+
+    <!-- Quadrant I: Pure Utility -->
+    <section class="slide">
+      <div class="frame quadrant-detail">
+        <div class="frame__top">
+          <span class="frame__corner">Quadrant I</span>
+          <span class="frame__corner">Pure Utility</span>
+        </div>
+
+        <div class="quadrant-header">
+          <div class="quadrant-position">Low Visibility × Low Expressiveness</div>
+          <h2 class="text-display">Pure Utility</h2>
+          <p class="text-lead">Functional products that solve a need but offer no story, aesthetic appeal, or cultural surface.</p>
+        </div>
+
+        <table class="patterns-table">
+          <thead>
+            <tr>
+              <th>Pattern</th>
+              <th>What it looks like</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Commodity packaging</td>
+              <td>Drugstore shampoo in generic PET bottles; white pill jars</td>
+              <td>Price and function beat story</td>
+            </tr>
+            <tr>
+              <td>Zero ritual</td>
+              <td>"Use & forget" application—nothing worth filming</td>
+              <td>No social surface for the brand</td>
+            </tr>
+            <tr>
+              <td>B2B/private-label roots</td>
+              <td>Often produced by contract manufacturers</td>
+              <td>Little differentiation, easy to swap</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="insights">
+          <h4>Strategic Insights</h4>
+          <ul>
+            <li><strong>Where you compete:</strong> Price, performance, distribution leverage—not culture</li>
+            <li><strong>First step upward:</strong> Design refresh or minor ritual layer (e.g., pump vs. squeeze)</li>
+            <li><strong>Risk:</strong> Race to the bottom on pricing with minimal brand loyalty</li>
+          </ul>
+        </div>
+
+        <div class="frame__bottom">
+          <div class="frame__page">
+            <span class="frame__corner">04</span>
+          </div>
+          <span class="frame__corner">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quadrant II: Pop-Aesthetic Flex -->
+    <section class="slide">
+      <div class="frame quadrant-detail">
+        <div class="frame__top">
+          <span class="frame__corner">Quadrant II</span>
+          <span class="frame__corner">Pop-Aesthetic Flex</span>
+        </div>
+
+        <div class="quadrant-header">
+          <div class="quadrant-position">High Visibility × Low Expressiveness</div>
+          <h2 class="text-display">Pop-Aesthetic Flex</h2>
+          <p class="text-lead">Affordable objects engineered for the camera first, heritage later. Win instant attention through distinctive form and color.</p>
+        </div>
+
+        <table class="patterns-table">
+          <thead>
+            <tr>
+              <th>Pattern</th>
+              <th>What it looks like</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Iconic industrial design</td>
+              <td>Away's polycarbonate shell colors; Touchland's flat misting bottle</td>
+              <td>Instantly photogenic, easy to spot</td>
+            </tr>
+            <tr>
+              <td>"Surface-level flex"</td>
+              <td>Object shown in what's-in-my-bag or shelf shots</td>
+              <td>Visibility itself is the value</td>
+            </tr>
+            <tr>
+              <td>Accessible price tiers</td>
+              <td>Usually premium-mass, not ultra-luxury</td>
+              <td>Encourages widespread adoption</td>
+            </tr>
+            <tr>
+              <td>Viral UGC loops</td>
+              <td>Color drops, seasonal releases, TikTok rituals</td>
+              <td>Momentum compensates for thin lore</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="examples-list">
+          <div class="example-item">
+            <h4>Touchland</h4>
+            <p>Turned sanitizer into lifestyle prop via color pops and mist applicator (>$100M lifetime sales, >200% 2023 growth)</p>
+          </div>
+          <div class="example-item">
+            <h4>Away</h4>
+            <p>Suitcase designed for airport selfies; wheels are part of the aesthetic</p>
+          </div>
+          <div class="example-item">
+            <h4>Ritual</h4>
+            <p>Transparent capsules + sunny branding, yet narrative still basic "clean ingredients"</p>
+          </div>
+        </div>
+
+        <div class="insights">
+          <h4>Strategic Insights</h4>
+          <ul>
+            <li><strong>Strength:</strong> Massive reach, fast brand flywheel, accessible entry point</li>
+            <li><strong>Risk:</strong> Easy for competitors to copy the look; cultural fatigue sets in quicker</li>
+            <li><strong>How to win:</strong> Own a signature form factor or color code that pops in one-second scroll</li>
+            <li><strong>Upgrade path:</strong> Layer narrative depth gradually (collabs, ingredient backstories, charity hooks) to avoid sliding back to commodity</li>
+          </ul>
+        </div>
+
+        <div class="frame__bottom">
+          <div class="frame__page">
+            <span class="frame__corner">05</span>
+          </div>
+          <span class="frame__corner">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quadrant III: Discreet Status Signals -->
+    <section class="slide">
+      <div class="frame quadrant-detail">
+        <div class="frame__top">
+          <span class="frame__corner">Quadrant III</span>
+          <span class="frame__corner">Discreet Status</span>
+        </div>
+
+        <div class="quadrant-header">
+          <div class="quadrant-position">Low Visibility × High Expressiveness</div>
+          <h2 class="text-display">Discreet Status Signals</h2>
+          <p class="text-lead">The "IYKYK" / Quiet Luxury zone. Products used in private settings with minimal but recognizable packaging that decodes only for insiders.</p>
+        </div>
+
+        <table class="patterns-table">
+          <thead>
+            <tr>
+              <th>Pattern</th>
+              <th>What it looks like</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Minimal but recognizable packaging</td>
+              <td>Aesop amber glass; Augustinus Bader cobalt-blue + copper</td>
+              <td>Lets insiders spot it, outsiders overlook it</td>
+            </tr>
+            <tr>
+              <td>Science/heritage storytelling</td>
+              <td>Stem-cell language (Bader), Ayurvedic rituals (Ranavat)</td>
+              <td>Provides narrative depth that substitutes for public display</td>
+            </tr>
+            <tr>
+              <td>Restricted distribution</td>
+              <td>Ffern's wait-list fragrance drops; Care/of personalized sachets</td>
+              <td>Scarcity keeps the club small, amplifying IYKYK energy</td>
+            </tr>
+            <tr>
+              <td>Private-use rituals amplified online</td>
+              <td>#shelfie posts, "GRWM" videos, bathroom-sink tours</td>
+              <td>Creates second-order visibility: the ritual, not the raw product</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="examples-list">
+          <div class="example-item">
+            <h4>Augustinus Bader</h4>
+            <p>Science-driven prestige cream spotted by beauty insiders. Founded by stem cell expert, emphasizes TFC8® technology. Cult following including Victoria Beckham collaborations.</p>
+          </div>
+          <div class="example-item">
+            <h4>Aesop</h4>
+            <p>Amber bottles now shorthand for tasteful interiors. Became "bougie bathroom" status cue on TikTok. Packaging as cultural shorthand for taste and subtle affluence.</p>
+          </div>
+          <div class="example-item">
+            <h4>Ffern</h4>
+            <p>Fragrance released four times a year to subscribers only. Limited-edition releases aligned with solstices and equinoxes. Cultural cachet is the invitation itself.</p>
+          </div>
+        </div>
+
+        <div class="insights">
+          <h4>Strategic Insights</h4>
+          <ul>
+            <li><strong>Where you compete:</strong> Substance is the new logo—invest in R&D, provenance, or craftsmanship</li>
+            <li><strong>How to maintain exclusivity:</strong> Controlled distribution or drops to keep IYKYK energy alive</li>
+            <li><strong>Content strategy:</strong> Amplify ritual content (night routines, unboxing) rather than product glamour shots</li>
+            <li><strong>Pricing:</strong> Premium positioning possible through expertise and scarcity</li>
+          </ul>
+        </div>
+
+        <div class="frame__bottom">
+          <div class="frame__page">
+            <span class="frame__corner">06</span>
+          </div>
+          <span class="frame__corner">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quadrant IV: Identity Broadcast Engines -->
+    <section class="slide">
+      <div class="frame quadrant-detail">
+        <div class="frame__top">
+          <span class="frame__corner">Quadrant IV</span>
+          <span class="frame__corner">Identity Broadcast</span>
+        </div>
+
+        <div class="quadrant-header">
+          <div class="quadrant-position">High Visibility × High Expressiveness</div>
+          <h2 class="text-display">Identity Broadcast Engines</h2>
+          <p class="text-lead">Products that combine high in-feed salience with a thick narrative stack. Owners don't just show an object, they broadcast a worldview.</p>
+        </div>
+
+        <table class="patterns-table">
+          <thead>
+            <tr>
+              <th>Pattern</th>
+              <th>What it looks like</th>
+              <th>Why it matters</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Object worn/shown in daily life</td>
+              <td>Warby Parker frames on selfies; AirPods Max on street style</td>
+              <td>Constant passive display</td>
+            </tr>
+            <tr>
+              <td>Community & drop culture</td>
+              <td>Sneakerhead raffles; Warby collabs; colorway chases</td>
+              <td>Fuels FOMO + belonging</td>
+            </tr>
+            <tr>
+              <td>Meme-ability</td>
+              <td>AirPods evolved from joke to status flex</td>
+              <td>Cultural shorthand spreads fast</td>
+            </tr>
+            <tr>
+              <td>Accessible storytelling</td>
+              <td>"Glasses that fit your life," "Just-dropped Jordans"</td>
+              <td>Everyday language, broad reach</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="examples-list">
+          <div class="example-item">
+            <h4>Glossier</h4>
+            <p>Pink bubble-wrap pouch became a shareable badge of fandom. Created the "shelfie" phenomenon. Products tied to "skin first, makeup second" values.</p>
+          </div>
+          <div class="example-item">
+            <h4>Nike SNKRS</h4>
+            <p>Culture events with every drop. Sneakerhead community and raffle mechanics. Sub-culture + drop theatre.</p>
+          </div>
+          <div class="example-item">
+            <h4>Stanley Quencher</h4>
+            <p>Oversize tumbler signaling lifestyle tribe (wellness, TikTok moms). Colorway drops maintain cultural heat. Community-driven viral loops.</p>
+          </div>
+        </div>
+
+        <div class="insights">
+          <h4>Strategic Insights</h4>
+          <ul>
+            <li><strong>Design for daily stage-time:</strong> Object must remain visible without user effort</li>
+            <li><strong>Stack narratives early:</strong> Heritage, mission, collabs, fan language</li>
+            <li><strong>Cultivate rituals:</strong> Unboxing codes, hashtag challenges, IRL drops</li>
+            <li><strong>Flex pricing intelligently:</strong> Entry SKUs onboard users; premium SKUs deepen commitment</li>
+            <li><strong>Monitor culture loops:</strong> When visibility fatigue hits, inject new meaning</li>
+          </ul>
+        </div>
+
+        <div class="frame__bottom">
+          <div class="frame__page">
+            <span class="frame__corner">07</span>
+          </div>
+          <span class="frame__corner">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hero: Cultural Capital -->
+    <section class="slide slide--hero bg-signal">
+      <h2 class="text-hero">
+        Cultural Capital<br>
+        Levers
+      </h2>
+    </section>
+
+    <!-- Cultural Capital -->
+    <section class="slide">
+      <div class="frame">
+        <div class="frame__top">
+          <span class="frame__corner">Strategic Framework</span>
+          <span class="frame__corner">Cultural Capital</span>
+        </div>
+
+        <h2 class="text-title">Cultural Capital Levers</h2>
+        <p class="text-body" style="margin-bottom: var(--space-lg);">
+          Different quadrants monetize different bands of cultural capital:
+        </p>
+
+        <div class="capital-table">
+          <div class="capital-row">
+            <div class="capital-name">Heritage Capital</div>
+            <div class="capital-def">Rarity, scientific authority, provenance</div>
+            <div class="capital-quadrants">Discreet Status Signals, Identity Broadcast Engines</div>
+          </div>
+
+          <div class="capital-row">
+            <div class="capital-name">Aesthetic Capital</div>
+            <div class="capital-def">Photogenic object, color palette, form factor</div>
+            <div class="capital-quadrants">Pop-Aesthetic Flex, Identity Broadcast Engines</div>
+          </div>
+
+          <div class="capital-row">
+            <div class="capital-name">Social Capital</div>
+            <div class="capital-def">Number of peer shares, duets, community size</div>
+            <div class="capital-quadrants">Pop-Aesthetic Flex, Identity Broadcast Engines</div>
+          </div>
+
+          <div class="capital-row">
+            <div class="capital-name">Price Capital</div>
+            <div class="capital-def">Who can afford the flex, scarcity mechanics</div>
+            <div class="capital-quadrants">Discreet Status Signals</div>
+          </div>
+        </div>
+
+        <div class="frame__bottom">
+          <div class="frame__page">
+            <span class="frame__corner">08</span>
+          </div>
+          <span class="frame__corner">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Migration Paths -->
+    <section class="slide">
+      <div class="frame">
+        <div class="frame__top">
+          <span class="frame__corner">Strategic Framework</span>
+          <span class="frame__corner">Migration Paths</span>
+        </div>
+
+        <h2 class="text-title">How Products Move Between Quadrants</h2>
+
+        <div class="migration-path">
+          <h4>Pure Utility → Pop-Aesthetic Flex</h4>
+          <p class="text-body" style="margin-bottom: var(--space-sm);">Most common trajectory for upgrading commodity products.</p>
+          <ul style="margin-left: var(--space-md); font-size: 14px; line-height: 1.6;">
+            <li>Start with packaging and aesthetic refresh</li>
+            <li>Add distinctive form factor or color code</li>
+            <li>Enable "shelf reveal" moments</li>
+          </ul>
+          <div class="text-small" style="margin-top: var(--space-md); opacity: 0.6;"><strong>Example:</strong> Generic hand sanitizer → Touchland</div>
+        </div>
+
+        <div class="migration-path">
+          <h4>Pop-Aesthetic Flex → Identity Broadcast Engines</h4>
+          <p class="text-body" style="margin-bottom: var(--space-sm);">Add depth to maintain cultural relevance.</p>
+          <ul style="margin-left: var(--space-md); font-size: 14px; line-height: 1.6;">
+            <li>Add narrative depth and brand values</li>
+            <li>Introduce collaboration and drop cadence</li>
+            <li>Build community rituals and challenges</li>
+            <li>Layer heritage or science storytelling</li>
+          </ul>
+          <div class="text-small" style="margin-top: var(--space-md); opacity: 0.6;"><strong>Trajectory:</strong> Away (still in Flex) → could add sustainability mission + community events</div>
+        </div>
+
+        <div class="migration-path">
+          <h4>Pure Utility → Discreet Status Signals</h4>
+          <p class="text-body" style="margin-bottom: var(--space-sm);">Rare but possible with breakthrough innovation.</p>
+          <ul style="margin-left: var(--space-md); font-size: 14px; line-height: 1.6;">
+            <li>Breakthrough science or R&D innovation</li>
+            <li>Add scarcity mechanics (limited drops, subscription)</li>
+            <li>Focus on insider recognition and provenance</li>
+            <li>Invest in craftsmanship narratives</li>
+          </ul>
+          <div class="text-small" style="margin-top: var(--space-md); opacity: 0.6;"><strong>Example:</strong> Generic skincare → Augustinus Bader (via stem cell innovation)</div>
+        </div>
+
+        <div class="frame__bottom">
+          <div class="frame__page">
+            <span class="frame__corner">09</span>
+          </div>
+          <span class="frame__corner">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hero: Core Insight -->
+    <section class="slide slide--hero bg-shift">
+      <h2 class="text-hero" style="color: var(--white); max-width: 24ch;">
+        Visibility has shifted from public display to contextual presence
+      </h2>
+    </section>
+
+    <!-- Application -->
+    <section class="slide">
+      <div class="frame">
+        <div class="frame__top">
+          <span class="frame__corner">Application</span>
+          <span class="frame__corner">How to Use This</span>
+        </div>
+
+        <h2 class="text-title">How to Apply This Framework</h2>
+
+        <div class="grid-2" style="margin-top: var(--space-lg);">
+          <div style="padding: var(--space-md); background: var(--blush);">
+            <h3 class="text-subtitle" style="color: var(--volt);">01 — Audit Current Position</h3>
+            <p class="text-body">Map your product portfolio across the four quadrants. Where do products sit today? What cultural capital are they leveraging?</p>
+          </div>
+
+          <div style="padding: var(--space-md); background: var(--blush);">
+            <h3 class="text-subtitle" style="color: var(--signal);">02 — Pick a Migration Path</h3>
+            <p class="text-body">Based on resources and market opportunity. Quick wins (design refresh) vs. high investment (R&D breakthrough).</p>
+          </div>
+
+          <div style="padding: var(--space-md); background: var(--blush);">
+            <h3 class="text-subtitle" style="color: var(--shift);">03 — Prototype Rituals First</h3>
+            <p class="text-body">Test cheaper than hardware changes. Launch limited content series or Instagram campaigns to validate narrative resonance.</p>
+          </div>
+
+          <div style="padding: var(--space-md); background: var(--blush);">
+            <h3 class="text-subtitle" style="color: var(--black);">04 — Measure Cultural ROI</h3>
+            <p class="text-body">Track share of conversation, UGC volume, community engagement, and price premium maintenance beyond units sold.</p>
+          </div>
+        </div>
+
+        <div class="frame__bottom">
+          <div class="frame__page">
+            <span class="frame__corner">10</span>
+          </div>
+          <span class="frame__corner">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Takeaways -->
+    <section class="slide bg-black">
+      <div class="frame">
+        <div class="frame__top">
+          <span class="frame__corner" style="color: rgba(255,255,255,0.4);">Conclusion</span>
+          <span class="frame__corner" style="color: rgba(255,255,255,0.4);">Key Takeaways</span>
+        </div>
+
+        <h2 class="text-display" style="color: var(--white); margin-bottom: var(--space-lg);">What This Means</h2>
+
+        <div class="grid-3">
+          <div style="padding: var(--space-md); background: rgba(226, 255, 0, 0.1); border-left: 3px solid var(--volt);">
+            <h4 style="color: var(--volt); font-family: var(--font-display); font-size: 16px; margin-bottom: var(--space-sm);">Don't Aim to Be Seen</h4>
+            <p style="color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5;">Aim to be staged. Design for the environment where products will be photographed: bathrooms, vanities, social feeds.</p>
+          </div>
+
+          <div style="padding: var(--space-md); background: rgba(0, 255, 0, 0.08); border-left: 3px solid var(--signal);">
+            <h4 style="color: var(--signal); font-family: var(--font-display); font-size: 16px; margin-bottom: var(--space-sm);">Elevate Function with Narrative</h4>
+            <p style="color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5;">Even a supplement can be about "resilience" or "inner glow." Generic categories can be transformed through storytelling.</p>
+          </div>
+
+          <div style="padding: var(--space-md); background: rgba(255, 0, 255, 0.08); border-left: 3px solid var(--shift);">
+            <h4 style="color: var(--shift); font-family: var(--font-display); font-size: 16px; margin-bottom: var(--space-sm);">Encourage Rituals, Not Just Use</h4>
+            <p style="color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5;">Cultural presence emerges from how a product is integrated into daily habits worth sharing.</p>
+          </div>
+
+          <div style="padding: var(--space-md); background: rgba(226, 255, 0, 0.1); border-left: 3px solid var(--volt);">
+            <h4 style="color: var(--volt); font-family: var(--font-display); font-size: 16px; margin-bottom: var(--space-sm);">Leverage Aesthetic Consistency</h4>
+            <p style="color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5;">Aesop and Glossier show how repeatable visual coherence creates cultural shorthand.</p>
+          </div>
+
+          <div style="padding: var(--space-md); background: rgba(0, 255, 0, 0.08); border-left: 3px solid var(--signal);">
+            <h4 style="color: var(--signal); font-family: var(--font-display); font-size: 16px; margin-bottom: var(--space-sm);">Design for the Shelf Reveal</h4>
+            <p style="color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5;">When products aren't worn publicly, packaging must look understated yet unmistakable in shared spaces.</p>
+          </div>
+
+          <div style="padding: var(--space-md); background: rgba(255, 0, 255, 0.08); border-left: 3px solid var(--shift);">
+            <h4 style="color: var(--shift); font-family: var(--font-display); font-size: 16px; margin-bottom: var(--space-sm);">Let Scarcity Do the Signaling</h4>
+            <p style="color: rgba(255,255,255,0.7); font-size: 13px; line-height: 1.5;">For Discreet Status: tight drops, wait-lists, or personalization instill enough friction to keep the club exclusive.</p>
+          </div>
+        </div>
+
+        <div class="frame__bottom" style="border-color: rgba(255,255,255,0.1);">
+          <div class="frame__page">
+            <span class="frame__corner" style="color: rgba(255,255,255,0.4);">11</span>
+          </div>
+          <span class="frame__corner" style="color: rgba(255,255,255,0.4);">Igor Schwarzmann</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing -->
+    <section class="slide slide--hero bg-volt">
+      <h2 class="text-hero" style="margin-bottom: var(--space-md);">
+        Visibility Shift Matrix
+      </h2>
+      <p class="text-lead" style="opacity: 0.7;">Strategic Framework — February 2026</p>
+      <p class="text-body" style="margin-top: var(--space-xl); opacity: 0.5;">Igor Schwarzmann<br>igorschwarzmann.com</p>
+    </section>
+
+  </div>
+
+  <script>
+    // Progress bar
+    const progressFill = document.getElementById('progressFill');
+    const slideContainer = document.querySelector('.slide-container');
+
+    slideContainer.addEventListener('scroll', () => {
+      const scrollTop = slideContainer.scrollTop;
+      const scrollHeight = slideContainer.scrollHeight - slideContainer.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      progressFill.style.width = progress + '%';
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      const slides = document.querySelectorAll('.slide');
+      const currentScroll = slideContainer.scrollTop;
+      let targetSlide = null;
+
+      // Find current slide
+      slides.forEach((slide, index) => {
+        const slideTop = slide.offsetTop;
+        if (Math.abs(currentScroll - slideTop) < 100) {
+          if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+            e.preventDefault();
+            targetSlide = slides[Math.min(index + 1, slides.length - 1)];
+          } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            targetSlide = slides[Math.max(index - 1, 0)];
+          } else if (e.key === 'Home') {
+            e.preventDefault();
+            targetSlide = slides[0];
+          } else if (e.key === 'End') {
+            e.preventDefault();
+            targetSlide = slides[slides.length - 1];
+          }
+        }
+      });
+
+      if (targetSlide) {
+        targetSlide.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  </script>
+
+</body>
+</html>
