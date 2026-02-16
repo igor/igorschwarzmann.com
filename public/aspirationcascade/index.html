@@ -1,0 +1,1972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Aspiration Cascade | Igor Schwarzmann</title>
+  <meta name="description" content="From Blocked Dreams to Micro-Luxuries: Understanding the mechanism reshaping consumer behavior.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Darker+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       DESIGN TOKENS
+       ============================================ */
+    :root {
+      /* Colors - Semantic */
+      --color-volt: #E2FF00;
+      --color-signal: #00FF00;
+      --color-shift: #FF00FF;
+      --color-white: #FFFFFF;
+      --color-black: #000000;
+      --color-blush: #F5F0EB;
+      --color-gray: #888888;
+      --color-gray-light: #E5E5E5;
+
+      /* Typography */
+      --font-display: 'Darker Grotesque', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+
+      /* Type Scale */
+      --text-hero: clamp(56px, 10vw, 120px);
+      --text-display: clamp(40px, 6vw, 72px);
+      --text-title: clamp(28px, 4vw, 48px);
+      --text-lead: clamp(20px, 2.5vw, 28px);
+      --text-body: clamp(16px, 1.8vw, 20px);
+      --text-caption: clamp(12px, 1.2vw, 14px);
+
+      /* Spacing */
+      --space-xs: 8px;
+      --space-sm: 16px;
+      --space-md: 24px;
+      --space-lg: 48px;
+      --space-xl: 96px;
+
+      /* Animation */
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+      /* Subtle effects */
+      --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      line-height: 1.5;
+      color: var(--color-black);
+      background: var(--color-black);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+    }
+
+    /* Very subtle film grain for editorial feel */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.015;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      line-height: 0.95;
+      max-width: 20ch; /* Fix #2: Prevent awkward line breaks */
+    }
+
+    /* ============================================
+       SLIDE STRUCTURE
+       ============================================ */
+    .deck {
+      width: 100%;
+    }
+
+    .slide {
+      width: 100vw;
+      min-height: 70vh; /* Fix #1: Content-driven, not forced 100vh */
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-xl) var(--space-lg);
+      overflow: hidden;
+    }
+
+    .slide--hero {
+      min-height: 100vh; /* Hero statements use full viewport */
+    }
+
+    /* Background modes */
+    .bg-white { background: var(--color-white); color: var(--color-black); }
+    .bg-black { background: var(--color-black); color: var(--color-white); }
+    .bg-volt { background: var(--color-volt); color: var(--color-black); }
+    .bg-signal { background: var(--color-signal); color: var(--color-black); }
+    .bg-shift { background: var(--color-shift); color: var(--color-white); }
+    .bg-blush { background: var(--color-blush); color: var(--color-black); }
+
+    /* ============================================
+       THE FRAME (Fix #3: Complete 4-corner implementation)
+       ============================================ */
+    .frame {
+      position: relative;
+    }
+
+    /* Top-left: Section label */
+    .frame[data-section]::before {
+      content: attr(data-section);
+      position: absolute;
+      top: var(--space-md);
+      left: var(--space-lg);
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+    }
+
+    /* Top-right: Context info */
+    .frame-context {
+      position: absolute;
+      top: var(--space-md);
+      right: var(--space-lg);
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.6;
+    }
+
+    /* Bottom-left: Page number with visual anchors */
+    .frame-page {
+      position: absolute;
+      bottom: var(--space-md);
+      left: var(--space-lg);
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      opacity: 0.6;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .frame-page::before,
+    .frame-page::after {
+      content: '';
+      width: 48px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    /* Bottom-right: Author name */
+    .frame-author {
+      position: absolute;
+      bottom: var(--space-md);
+      right: var(--space-lg);
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      opacity: 0.6;
+    }
+
+    /* ============================================
+       TYPOGRAPHY UTILITIES
+       ============================================ */
+    .text-hero {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      font-weight: 800;
+      line-height: 0.9;
+    }
+
+    .text-display {
+      font-family: var(--font-display);
+      font-size: var(--text-display);
+      font-weight: 700;
+      line-height: 0.95;
+    }
+
+    .text-title {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .text-lead {
+      font-family: var(--font-body);
+      font-size: var(--text-lead);
+      line-height: 1.4;
+      max-width: 55ch; /* Body text max-width */
+    }
+
+    .text-body {
+      font-family: var(--font-body);
+      font-size: var(--text-body);
+      line-height: 1.5;
+      max-width: 55ch;
+    }
+
+    .text-caption {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Highlight text */
+    .highlight-volt {
+      background: var(--color-volt);
+      padding: 0 0.15em;
+      color: var(--color-black);
+    }
+
+    .highlight-signal {
+      background: var(--color-signal);
+      padding: 0 0.15em;
+      color: var(--color-black);
+    }
+
+    .highlight-shift {
+      background: var(--color-shift);
+      padding: 0 0.15em;
+      color: var(--color-white);
+    }
+
+    /* ============================================
+       LAYOUT PATTERNS
+       ============================================ */
+    .content-center {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+      min-height: auto;
+    }
+
+    @media (max-width: 768px) {
+      .split {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+      }
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .stack-lg {
+      gap: var(--space-lg);
+    }
+
+    /* ============================================
+       SLIDE 1: TITLE
+       ============================================ */
+    .slide-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: var(--space-xl);
+    }
+
+    .slide-title .title-main {
+      font-family: var(--font-display);
+      font-size: clamp(72px, 14vw, 200px);
+      font-weight: 800;
+      line-height: 0.85;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-md);
+      max-width: none; /* Override max-width for title */
+    }
+
+    .slide-title .title-sub {
+      font-family: var(--font-body);
+      font-size: var(--text-lead);
+      opacity: 0.7;
+      max-width: 500px;
+    }
+
+    /* Cascade animation on title */
+    .cascade-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(100%);
+      animation: cascadeIn 0.8s var(--ease-out-expo) forwards;
+    }
+
+    .cascade-word:nth-child(1) { animation-delay: 0.1s; }
+    .cascade-word:nth-child(2) { animation-delay: 0.2s; }
+    .cascade-word:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes cascadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ============================================
+       SLIDE 2-4: OBSERVABLE PATTERN / PARADOX
+       ============================================ */
+    .evidence-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .evidence-list li {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: 500;
+      padding-left: var(--space-lg);
+      position: relative;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slideIn 0.6s var(--ease-out-expo) forwards;
+      max-width: none; /* Override for list items */
+    }
+
+    .evidence-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.4em;
+      width: 24px;
+      height: 4px;
+      background: var(--color-volt);
+    }
+
+    .evidence-list li:nth-child(1) { animation-delay: 0.2s; }
+    .evidence-list li:nth-child(2) { animation-delay: 0.35s; }
+    .evidence-list li:nth-child(3) { animation-delay: 0.5s; }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ============================================
+       SLIDE 5: CORE INSIGHT (Hero Statement)
+       ============================================ */
+    .hero-statement {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: var(--space-xl);
+    }
+
+    .hero-statement h2 {
+      font-size: clamp(48px, 9vw, 140px);
+      font-weight: 800;
+      line-height: 0.9;
+      max-width: 12ch;
+    }
+
+    .hero-statement .subtext {
+      margin-top: var(--space-lg);
+      font-size: var(--text-lead);
+      max-width: 50ch;
+      opacity: 0.85;
+    }
+
+    /* ============================================
+       SLIDE 6: CASCADE DIAGRAM (Fix #4 & #5)
+       ============================================ */
+    .cascade-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 900px; /* Fix #5: Wider boxes */
+      margin: var(--space-lg) 0;
+    }
+
+    .cascade-level {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      padding-left: var(--space-xl); /* Extra padding for left arrow */
+      position: relative;
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
+      animation: cascadeLevel 0.5s var(--ease-out-expo) forwards;
+    }
+
+    /* Fix #4: Arrows on LEFT side of boxes */
+    .cascade-level::before {
+      content: '↓';
+      position: absolute;
+      left: var(--space-sm);
+      font-size: 24px;
+      opacity: 0.5;
+    }
+
+    .cascade-level:nth-child(1) { animation-delay: 0.1s; }
+    .cascade-level:nth-child(2) { animation-delay: 0.3s; }
+    .cascade-level:nth-child(3) { animation-delay: 0.5s; }
+    .cascade-level:nth-child(4) { animation-delay: 0.7s; }
+
+    @keyframes cascadeLevel {
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .cascade-level--blocked {
+      background: rgba(255,255,255,0.1);
+      border-left: 4px solid var(--color-gray);
+    }
+
+    .cascade-level--strained {
+      background: rgba(255, 0, 255, 0.1); /* Fix #6: Transparent */
+      border-left: 4px solid var(--color-shift);
+    }
+
+    .cascade-level--thriving {
+      background: rgba(226,255,0,0.15); /* Fix #6: Transparent */
+      border-left: 4px solid var(--color-volt);
+    }
+
+    .cascade-level--emerging {
+      background: rgba(0,255,0,0.12); /* Fix #6: Transparent */
+      border-left: 4px solid var(--color-signal);
+    }
+
+    .cascade-label {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .cascade-status {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+    }
+
+    /* ============================================
+       SLIDE 7: TRIPLE FORCES
+       ============================================ */
+    .forces-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+
+    @media (max-width: 900px) {
+      .forces-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .force-card {
+      padding: var(--space-lg);
+      border: 1px solid rgba(0,0,0,0.1);
+      position: relative;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: forceIn 0.6s var(--ease-out-expo) forwards;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .force-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .force-card:nth-child(1) { animation-delay: 0.2s; }
+    .force-card:nth-child(2) { animation-delay: 0.35s; }
+    .force-card:nth-child(3) { animation-delay: 0.5s; }
+
+    @keyframes forceIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .force-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+    }
+
+    .force-card--economic::before { background: var(--color-volt); }
+    .force-card--dopamine::before { background: var(--color-shift); }
+    .force-card--visibility::before { background: var(--color-signal); }
+
+    .force-number {
+      font-family: var(--font-display);
+      font-size: var(--text-display);
+      font-weight: 800;
+      opacity: 0.15;
+      position: absolute;
+      top: var(--space-sm);
+      right: var(--space-md);
+    }
+
+    .force-title {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+    }
+
+    .force-type {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      margin-bottom: var(--space-md);
+    }
+
+    .force-desc {
+      font-size: var(--text-body);
+      opacity: 0.8;
+    }
+
+    /* ============================================
+       SLIDE 8: 2x2 MATRIX (Fix #6: Transparent backgrounds)
+       ============================================ */
+    .matrix-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: var(--space-lg) 0;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: auto 1fr 1fr;
+      grid-template-rows: auto 1fr 1fr;
+      gap: 2px;
+      background: var(--color-black);
+      max-width: 900px; /* Wider */
+      width: 100%;
+    }
+
+    .matrix-corner {
+      background: var(--color-white);
+    }
+
+    .matrix-label-top {
+      background: var(--color-white);
+      padding: var(--space-sm) var(--space-md);
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-align: center;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .matrix-label-side {
+      background: var(--color-white);
+      padding: var(--space-md);
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .matrix-cell {
+      background: var(--color-white);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 220px;
+      transition: all 0.3s ease;
+    }
+
+    .matrix-cell:hover {
+      transform: scale(1.02);
+      z-index: 1;
+    }
+
+    /* Fix #6: Use transparent backgrounds (10-20% opacity) */
+    .matrix-cell--viral {
+      background: linear-gradient(135deg,
+        rgba(226, 255, 0, 0.18),
+        rgba(0, 255, 0, 0.15)
+      );
+    }
+
+    .matrix-cell--habitual {
+      background: rgba(255, 0, 255, 0.08);
+    }
+
+    .matrix-cell--status {
+      background: rgba(226, 255, 0, 0.12);
+    }
+
+    .matrix-cell--functional {
+      background: var(--color-blush);
+    }
+
+    .matrix-cell-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lead);
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+    }
+
+    .matrix-cell-examples {
+      font-size: var(--text-caption);
+      opacity: 0.7;
+    }
+
+    /* ============================================
+       SLIDES 9-10: INSTRUMENTS
+       ============================================ */
+    .instruments-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .instrument {
+      display: flex;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background: rgba(0,0,0,0.03);
+      border-radius: 4px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: instrumentIn 0.5s var(--ease-out-expo) forwards;
+    }
+
+    .instrument:nth-child(1) { animation-delay: 0.1s; }
+    .instrument:nth-child(2) { animation-delay: 0.15s; }
+    .instrument:nth-child(3) { animation-delay: 0.2s; }
+    .instrument:nth-child(4) { animation-delay: 0.25s; }
+    .instrument:nth-child(5) { animation-delay: 0.3s; }
+
+    @keyframes instrumentIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .instrument-number {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: 800;
+      color: var(--color-volt);
+      min-width: 50px;
+    }
+
+    .bg-black .instrument-number {
+      color: var(--color-volt);
+    }
+
+    .instrument-content h4 {
+      font-family: var(--font-display);
+      font-size: var(--text-lead);
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+    }
+
+    .instrument-content p {
+      font-size: var(--text-body);
+      opacity: 0.75;
+    }
+
+    .bg-black .instrument {
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* ============================================
+       SLIDE 11: FASHION BLUEPRINT
+       ============================================ */
+    .transformation-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: var(--space-md);
+      align-items: center;
+      margin-top: var(--space-lg);
+    }
+
+    .transform-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      opacity: 0;
+      animation: transformIn 0.5s var(--ease-out-expo) forwards;
+    }
+
+    .transform-item:nth-child(1) { animation-delay: 0.1s; }
+    .transform-item:nth-child(2) { animation-delay: 0.2s; }
+    .transform-item:nth-child(3) { animation-delay: 0.3s; }
+    .transform-item:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes transformIn {
+      to { opacity: 1; }
+    }
+
+    .transform-label {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+      min-width: 100px;
+    }
+
+    .transform-from {
+      font-family: var(--font-display);
+      font-size: var(--text-lead);
+      font-weight: 400;
+      opacity: 0.4;
+      text-decoration: line-through;
+    }
+
+    .transform-arrow {
+      color: var(--color-volt);
+      font-size: 24px;
+    }
+
+    .transform-to {
+      font-family: var(--font-display);
+      font-size: var(--text-lead);
+      font-weight: 700;
+      color: var(--color-volt);
+    }
+
+    /* ============================================
+       SLIDE 12: CROSS-INDUSTRY (Fix #7: Stronger hierarchy)
+       ============================================ */
+    .industry-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    @media (max-width: 768px) {
+      .industry-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .industry-card {
+      background: var(--color-white);
+      padding: var(--space-lg);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.95);
+      animation: cardIn 0.5s var(--ease-out-expo) forwards;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.3s var(--ease-out-expo);
+    }
+
+    .industry-card:hover {
+      transform: translateY(-3px) scale(1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .industry-card:nth-child(1) { animation-delay: 0.1s; }
+    .industry-card:nth-child(2) { animation-delay: 0.2s; }
+    .industry-card:nth-child(3) { animation-delay: 0.3s; }
+    .industry-card:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes cardIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .industry-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--color-volt);
+    }
+
+    .industry-name {
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-gray);
+      margin-bottom: var(--space-sm);
+    }
+
+    /* Fix #7: "Before" state smaller, lighter, recessive */
+    .industry-from {
+      font-family: var(--font-display);
+      font-size: 0.85em; /* Smaller */
+      font-weight: 400; /* Lighter */
+      opacity: 0.35; /* More recessive */
+      text-decoration: line-through;
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Fix #7: "After" state much larger and bolder */
+    .industry-to {
+      font-family: var(--font-display);
+      font-size: 1.4em; /* Larger - 40% bigger */
+      font-weight: 700; /* Bold */
+      line-height: 1.1;
+      color: var(--color-black);
+    }
+
+    .industry-example {
+      font-size: var(--text-caption);
+      color: var(--color-gray);
+      margin-top: var(--space-sm);
+    }
+
+    /* ============================================
+       SLIDE 13: FINAL CTA
+       ============================================ */
+    .cta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+      margin: var(--space-xl) 0;
+    }
+
+    @media (max-width: 900px) {
+      .cta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cta-pillar {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: pillarIn 0.6s var(--ease-out-expo) forwards;
+    }
+
+    .cta-pillar:nth-child(1) { animation-delay: 0.2s; }
+    .cta-pillar:nth-child(2) { animation-delay: 0.35s; }
+    .cta-pillar:nth-child(3) { animation-delay: 0.5s; }
+
+    @keyframes pillarIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cta-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto var(--space-md);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .cta-pillar:nth-child(1) .cta-icon { background: var(--color-volt); }
+    .cta-pillar:nth-child(2) .cta-icon { background: var(--color-shift); }
+    .cta-pillar:nth-child(3) .cta-icon { background: var(--color-signal); }
+
+    .cta-pillar h3 {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+    }
+
+    .cta-pillar p {
+      font-size: var(--text-body);
+      opacity: 0.8;
+    }
+
+    .final-statement {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding-top: var(--space-xl);
+      border-top: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .final-statement p {
+      font-family: var(--font-display);
+      font-size: var(--text-display);
+      font-weight: 600;
+      line-height: 1.1;
+      max-width: none; /* Override */
+    }
+
+    .final-statement .highlight {
+      color: var(--color-volt);
+    }
+
+    /* ============================================
+       NAVIGATION - KEYNOTE-STYLE THUMBNAIL PANEL
+       ============================================ */
+    .thumbnail-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 140px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(24px) saturate(120%);
+      z-index: 200;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: var(--space-sm);
+      transform: translateX(0);
+      transition: transform 0.4s var(--ease-out-expo);
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 2px 0 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .thumbnail-panel.collapsed {
+      transform: translateX(-100%);
+    }
+
+    .thumbnail-panel::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .thumbnail-panel::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .thumbnail-panel::-webkit-scrollbar-thumb {
+      background: rgba(226, 255, 0, 0.3);
+      border-radius: 2px;
+    }
+
+    .thumbnail-panel::-webkit-scrollbar-thumb:hover {
+      background: rgba(226, 255, 0, 0.5);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-sm);
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .panel-title {
+      font-family: var(--font-body);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-volt);
+    }
+
+    .panel-close {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 2px;
+      transition: color 0.2s;
+      line-height: 1;
+    }
+
+    .panel-close:hover {
+      color: var(--color-volt);
+    }
+
+    .thumbnail-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .thumbnail-item {
+      position: relative;
+      background: var(--color-white);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 2px solid transparent;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .thumbnail-item:hover {
+      transform: scale(1.03);
+      border-color: rgba(226, 255, 0, 0.4);
+    }
+
+    .thumbnail-item.active {
+      border-color: var(--color-volt);
+      box-shadow: 0 3px 12px rgba(226, 255, 0, 0.35);
+    }
+
+    .thumbnail-preview {
+      width: 100%;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .thumbnail-number {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    /* Background colors and text contrast for thumbnails */
+    .thumbnail-preview.bg-white {
+      background: var(--color-white);
+    }
+    .thumbnail-preview.bg-white .thumbnail-number {
+      color: rgba(0, 0, 0, 0.45);
+    }
+
+    .thumbnail-preview.bg-black {
+      background: var(--color-black);
+    }
+    .thumbnail-preview.bg-black .thumbnail-number {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .thumbnail-preview.bg-volt {
+      background: var(--color-volt);
+    }
+    .thumbnail-preview.bg-volt .thumbnail-number {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .thumbnail-preview.bg-signal {
+      background: var(--color-signal);
+    }
+    .thumbnail-preview.bg-signal .thumbnail-number {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .thumbnail-preview.bg-shift {
+      background: var(--color-shift);
+    }
+    .thumbnail-preview.bg-shift .thumbnail-number {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .thumbnail-preview.bg-blush {
+      background: var(--color-blush);
+    }
+    .thumbnail-preview.bg-blush .thumbnail-number {
+      color: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Toggle button */
+    .panel-toggle {
+      position: fixed;
+      top: var(--space-md);
+      left: var(--space-md);
+      width: 44px;
+      height: 44px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 300;
+      transition: all 0.3s ease;
+    }
+
+    .panel-toggle:hover {
+      background: rgba(0, 0, 0, 0.95);
+      border-color: var(--color-volt);
+    }
+
+    .panel-toggle svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--color-white);
+      transition: stroke 0.2s;
+    }
+
+    .panel-toggle:hover svg {
+      stroke: var(--color-volt);
+    }
+
+    .panel-toggle.panel-open {
+      left: 156px; /* 140px panel + 16px spacing */
+      transition: left 0.4s var(--ease-out-expo);
+    }
+
+    .thumbnail-panel.collapsed ~ .panel-toggle.panel-open {
+      left: var(--space-md);
+    }
+
+    /* Old dot navigation (backup) */
+    .nav-progress {
+      position: fixed;
+      top: 50%;
+      right: var(--space-md);
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      z-index: 100;
+      opacity: 0.3;
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-dot:hover {
+      background: rgba(255,255,255,0.6);
+      transform: scale(1.3);
+    }
+
+    .nav-dot.active {
+      background: var(--color-volt);
+      transform: scale(1.5);
+    }
+
+    /* Keyboard hint */
+    .keyboard-hint {
+      position: fixed;
+      bottom: var(--space-md);
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-body);
+      font-size: var(--text-caption);
+      color: rgba(255,255,255,0.4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      z-index: 100;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+
+    .keyboard-hint.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 768px) {
+      .slide {
+        padding: var(--space-md);
+      }
+
+      .nav-progress {
+        display: none;
+      }
+
+      .thumbnail-panel {
+        display: none; /* Hide thumbnail panel on mobile */
+      }
+
+      .panel-toggle {
+        display: none; /* Hide toggle on mobile */
+      }
+
+      .frame[data-section]::before,
+      .frame-page,
+      .frame-context,
+      .frame-author {
+        font-size: 10px;
+      }
+    }
+
+    /* ============================================
+       PRINT STYLES
+       ============================================ */
+    @media print {
+      html {
+        scroll-snap-type: none;
+      }
+
+      .slide {
+        page-break-after: always;
+        min-height: 100vh;
+        scroll-snap-align: none;
+      }
+
+      .nav-progress,
+      .keyboard-hint {
+        display: none;
+      }
+    }
+
+    /* Accessibility: Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Thumbnail Panel Toggle -->
+  <button class="panel-toggle panel-open" id="panelToggle" aria-label="Toggle slide thumbnails">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7"></rect>
+      <rect x="14" y="3" width="7" height="7"></rect>
+      <rect x="14" y="14" width="7" height="7"></rect>
+      <rect x="3" y="14" width="7" height="7"></rect>
+    </svg>
+  </button>
+
+  <!-- Thumbnail Panel -->
+  <aside class="thumbnail-panel" id="thumbnailPanel">
+    <div class="panel-header">
+      <span class="panel-title">Slides</span>
+      <button class="panel-close" aria-label="Close panel">×</button>
+    </div>
+    <nav class="thumbnail-list" aria-label="Slide thumbnails">
+      <button class="thumbnail-item active" data-slide-index="0">
+        <div class="thumbnail-preview bg-black">
+          <span class="thumbnail-number">01</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="1">
+        <div class="thumbnail-preview bg-white">
+          <span class="thumbnail-number">02</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="2">
+        <div class="thumbnail-preview bg-blush">
+          <span class="thumbnail-number">03</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="3">
+        <div class="thumbnail-preview bg-white">
+          <span class="thumbnail-number">04</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="4">
+        <div class="thumbnail-preview bg-volt">
+          <span class="thumbnail-number">05</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="5">
+        <div class="thumbnail-preview bg-black">
+          <span class="thumbnail-number">06</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="6">
+        <div class="thumbnail-preview bg-white">
+          <span class="thumbnail-number">07</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="7">
+        <div class="thumbnail-preview bg-white">
+          <span class="thumbnail-number">08</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="8">
+        <div class="thumbnail-preview bg-white">
+          <span class="thumbnail-number">09</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="9">
+        <div class="thumbnail-preview bg-black">
+          <span class="thumbnail-number">10</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="10">
+        <div class="thumbnail-preview bg-black">
+          <span class="thumbnail-number">11</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="11">
+        <div class="thumbnail-preview bg-blush">
+          <span class="thumbnail-number">12</span>
+        </div>
+      </button>
+      <button class="thumbnail-item" data-slide-index="12">
+        <div class="thumbnail-preview bg-black">
+          <span class="thumbnail-number">13</span>
+        </div>
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Navigation dots -->
+  <nav class="nav-progress" aria-label="Slide navigation">
+    <button class="nav-dot active" data-slide="0" aria-label="Go to slide 1"></button>
+    <button class="nav-dot" data-slide="1" aria-label="Go to slide 2"></button>
+    <button class="nav-dot" data-slide="2" aria-label="Go to slide 3"></button>
+    <button class="nav-dot" data-slide="3" aria-label="Go to slide 4"></button>
+    <button class="nav-dot" data-slide="4" aria-label="Go to slide 5"></button>
+    <button class="nav-dot" data-slide="5" aria-label="Go to slide 6"></button>
+    <button class="nav-dot" data-slide="6" aria-label="Go to slide 7"></button>
+    <button class="nav-dot" data-slide="7" aria-label="Go to slide 8"></button>
+    <button class="nav-dot" data-slide="8" aria-label="Go to slide 9"></button>
+    <button class="nav-dot" data-slide="9" aria-label="Go to slide 10"></button>
+    <button class="nav-dot" data-slide="10" aria-label="Go to slide 11"></button>
+    <button class="nav-dot" data-slide="11" aria-label="Go to slide 12"></button>
+    <button class="nav-dot" data-slide="12" aria-label="Go to slide 13"></button>
+  </nav>
+
+  <div class="keyboard-hint">
+    <span class="key">↑</span>
+    <span class="key">↓</span>
+    <span>or scroll to navigate</span>
+  </div>
+
+  <article class="deck">
+
+    <!-- ==========================================
+         SLIDE 1: TITLE
+         ========================================== -->
+    <section class="slide slide-title bg-black slide--hero" id="slide-1">
+      <div class="content-center">
+        <h1 class="title-main">
+          <span class="cascade-word">THE</span><br>
+          <span class="cascade-word">ASPIRATION</span><br>
+          <span class="cascade-word" style="color: var(--color-volt)">CASCADE</span>
+        </h1>
+        <p class="title-sub">From Blocked Dreams to Micro-Luxuries</p>
+      </div>
+      <span class="frame-author">Igor Schwarzmann</span>
+      <span class="frame-context">2026</span>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 2: OBSERVABLE PATTERN
+         ========================================== -->
+    <section class="slide bg-white frame" data-section="Act I: The Pledge" id="slide-2">
+      <span class="frame-page">02</span>
+      <span class="frame-context">The Observable Pattern</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom: var(--space-lg);">Something Strange<br>Is Happening</h2>
+        <ul class="evidence-list">
+          <li>Homeownership rates <span class="highlight-volt">down</span>, $20 smoothie sales <span class="highlight-signal">up</span></li>
+          <li>Designer wardrobe dreams deferred, but $50 phone cases <span class="highlight-signal">thriving</span></li>
+          <li>Vacation budgets cut, yet spa day passes <span class="highlight-signal">sold out</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 3: CONVENTIONAL WISDOM
+         ========================================== -->
+    <section class="slide bg-blush frame" data-section="Act I: The Pledge" id="slide-3">
+      <span class="frame-page">03</span>
+      <span class="frame-context">Traditional Explanation</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <p class="text-caption" style="margin-bottom: var(--space-md); opacity: 0.6;">The Conventional Wisdom</p>
+        <blockquote class="text-display" style="margin-bottom: var(--space-xl);">
+          "Economic barriers force consumers to trade down."
+        </blockquote>
+        <div class="stack">
+          <p class="text-lead" style="opacity: 0.7;">Millennials can't afford homes → buy less</p>
+          <p class="text-lead" style="opacity: 0.7;">Gen Z faces wage stagnation → reduce spending</p>
+          <p class="text-lead" style="opacity: 0.7;">Inflation erodes purchasing power → sacrifice wants</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 4: THE PARADOX
+         ========================================== -->
+    <section class="slide bg-white frame" data-section="Act I: The Pledge" id="slide-4">
+      <span class="frame-page">04</span>
+      <span class="frame-context">The Paradox</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom: var(--space-lg);">But Something<br>Doesn't Add Up</h2>
+        <p class="text-lead" style="margin-bottom: var(--space-lg);">
+          If consumers are "trading down," why are they paying <em>premium prices</em> for smaller things?
+        </p>
+        <div class="stack" style="margin-bottom: var(--space-lg);">
+          <p class="text-title" style="font-weight: 500; max-width: none;">Why <span class="highlight-volt">$8</span> oat milk lattes?</p>
+          <p class="text-title" style="font-weight: 500; max-width: none;">Why <span class="highlight-volt">$45</span> candles?</p>
+          <p class="text-title" style="font-weight: 500; max-width: none;">Why <span class="highlight-volt">limited-edition</span> blind boxes?</p>
+        </div>
+        <p class="text-lead" style="font-weight: 600;">
+          This isn't trading down.<br>
+          <span class="highlight-shift">This is something else entirely.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 5: ASPIRATION ARBITRAGE (Hero)
+         ========================================== -->
+    <section class="slide hero-statement bg-volt slide--hero" id="slide-5">
+      <h2>ASPIRATION<br>ARBITRAGE</h2>
+      <p class="subtext">
+        The opportunity to <strong>bridge the gap</strong> between what consumers <em>can't have</em> (blocked macro-aspirations) and what they <em>can afford</em> (emotionally-concentrated micro-purchases).
+      </p>
+      <span class="frame-author" style="color: var(--color-black);">Igor Schwarzmann</span>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 6: THE CASCADE MECHANISM
+         ========================================== -->
+    <section class="slide bg-black frame" data-section="Act II: The Turn" id="slide-6">
+      <span class="frame-page" style="color: var(--color-white);">06</span>
+      <span class="frame-context" style="color: var(--color-white);">The Mechanism</span>
+      <span class="frame-author" style="color: var(--color-white);">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom: var(--space-sm);">They're Not Giving Up—</h2>
+        <h2 class="text-display" style="color: var(--color-volt); margin-bottom: var(--space-lg);">They're Compressing</h2>
+
+        <p class="text-lead" style="margin-bottom: var(--space-lg); opacity: 0.8;">
+          When aspirations become unattainable, consumers don't abandon dreams. They <strong>compress</strong> them into progressively smaller purchases that preserve emotional value.
+        </p>
+
+        <div class="cascade-diagram">
+          <div class="cascade-level cascade-level--blocked">
+            <span class="cascade-label">Macro Aspiration</span>
+            <span class="cascade-status">Blocked</span>
+          </div>
+          <div class="cascade-level cascade-level--strained">
+            <span class="cascade-label">Midi-Luxury</span>
+            <span class="cascade-status">Strained</span>
+          </div>
+          <div class="cascade-level cascade-level--thriving">
+            <span class="cascade-label">Micro-Luxury</span>
+            <span class="cascade-status">Thriving</span>
+          </div>
+          <div class="cascade-level cascade-level--emerging">
+            <span class="cascade-label">Nano-Moments</span>
+            <span class="cascade-status">Emerging</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 7: TRIPLE FORCES
+         ========================================== -->
+    <section class="slide bg-white frame" data-section="Act II: The Turn" id="slide-7">
+      <span class="frame-page">07</span>
+      <span class="frame-context">Three Forces</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom: var(--space-xs);">The Triple Acceleration</h2>
+        <p class="text-lead" style="opacity: 0.7; margin-bottom: var(--space-md);">Economics alone can't explain this</p>
+
+        <div class="forces-grid">
+          <div class="force-card force-card--economic">
+            <span class="force-number">1</span>
+            <h3 class="force-title">Economic Compression</h3>
+            <p class="force-type">Spatial</p>
+            <p class="force-desc">Traditional milestones become unattainable. Creates the <em>need</em>.</p>
+          </div>
+
+          <div class="force-card force-card--dopamine">
+            <span class="force-number">2</span>
+            <h3 class="force-title">Dopamine Culture</h3>
+            <p class="force-type">Temporal</p>
+            <p class="force-desc">Attention fragments into micro-reward cycles. Shapes the <em>format</em>.</p>
+          </div>
+
+          <div class="force-card force-card--visibility">
+            <span class="force-number">3</span>
+            <h3 class="force-title">Visibility Mechanics</h3>
+            <p class="force-type">Social</p>
+            <p class="force-desc">Private consumption transforms into public display. Determines <em>success</em>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 8: CASCADE MATRIX
+         ========================================== -->
+    <section class="slide bg-white frame" data-section="Act II: The Turn" id="slide-8">
+      <span class="frame-page">08</span>
+      <span class="frame-context">The Matrix</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-title" style="margin-bottom: var(--space-md); max-width: none;">Where Your Product Lives Determines Success</h2>
+
+        <div class="matrix-container">
+          <div class="matrix">
+            <div class="matrix-corner"></div>
+            <div class="matrix-label-top">High Visibility</div>
+            <div class="matrix-label-top">Low Visibility</div>
+
+            <div class="matrix-label-side">High Dopamine</div>
+            <div class="matrix-cell matrix-cell--viral">
+              <h4 class="matrix-cell-title">Viral Cascades</h4>
+              <p class="matrix-cell-examples">Touchland, Glossier</p>
+            </div>
+            <div class="matrix-cell matrix-cell--habitual">
+              <h4 class="matrix-cell-title">Habitual Cascades</h4>
+              <p class="matrix-cell-examples">Duolingo, Meditation apps</p>
+            </div>
+
+            <div class="matrix-label-side">Low Dopamine</div>
+            <div class="matrix-cell matrix-cell--status">
+              <h4 class="matrix-cell-title">Status Cascades</h4>
+              <p class="matrix-cell-examples">Luxury accessories</p>
+            </div>
+            <div class="matrix-cell matrix-cell--functional">
+              <h4 class="matrix-cell-title">Functional Cascades</h4>
+              <p class="matrix-cell-examples">Generic products</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 9: EXPERIENCE INSTRUMENTS
+         ========================================== -->
+    <section class="slide bg-white frame" data-section="Act III: The Prestige" id="slide-9">
+      <span class="frame-page">09</span>
+      <span class="frame-context">Part 1</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <p class="text-caption" style="color: var(--color-gray); margin-bottom: var(--space-sm);">How to Design for the Cascade</p>
+        <h2 class="text-display" style="margin-bottom: var(--space-md);">Experience Design</h2>
+
+        <div class="instruments-grid">
+          <div class="instrument">
+            <span class="instrument-number">01</span>
+            <div class="instrument-content">
+              <h4>Micro-Price Point</h4>
+              <p>≤$50 removes budget friction</p>
+            </div>
+          </div>
+          <div class="instrument">
+            <span class="instrument-number">02</span>
+            <div class="instrument-content">
+              <h4>Portion Control</h4>
+              <p>Makes indulgence permissible</p>
+            </div>
+          </div>
+          <div class="instrument">
+            <span class="instrument-number">03</span>
+            <div class="instrument-content">
+              <h4>Playful Packaging</h4>
+              <p>Transforms utility into experience</p>
+            </div>
+          </div>
+          <div class="instrument">
+            <span class="instrument-number">04</span>
+            <div class="instrument-content">
+              <h4>Scarcity & Surprise</h4>
+              <p>Creates agency through "wins"</p>
+            </div>
+          </div>
+          <div class="instrument">
+            <span class="instrument-number">05</span>
+            <div class="instrument-content">
+              <h4>Sensory Cue</h4>
+              <p>Delivers immediate gratification</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 10: BEHAVIORAL INSTRUMENTS
+         ========================================== -->
+    <section class="slide bg-black frame" data-section="Act III: The Prestige" id="slide-10">
+      <span class="frame-page" style="color: var(--color-white);">10</span>
+      <span class="frame-context" style="color: var(--color-white);">Part 2</span>
+      <span class="frame-author" style="color: var(--color-white);">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <p class="text-caption" style="color: var(--color-gray); margin-bottom: var(--space-sm);">How to Design for the Cascade</p>
+        <h2 class="text-display" style="margin-bottom: var(--space-lg);">Behavioral & Spatial</h2>
+
+        <div class="split">
+          <div>
+            <p class="text-caption" style="color: var(--color-shift); margin-bottom: var(--space-md);">Behavioral Architecture</p>
+            <div class="stack">
+              <div class="instrument">
+                <span class="instrument-number">06</span>
+                <div class="instrument-content">
+                  <h4>Storytelling & Collectibility</h4>
+                  <p>Identity building through accumulation</p>
+                </div>
+              </div>
+              <div class="instrument">
+                <span class="instrument-number">07</span>
+                <div class="instrument-content">
+                  <h4>Ritualization</h4>
+                  <p>Habit formation through subscription/routine</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p class="text-caption" style="color: var(--color-signal); margin-bottom: var(--space-md);">Spatial Architecture</p>
+            <div class="stack">
+              <div class="instrument">
+                <span class="instrument-number">08</span>
+                <div class="instrument-content">
+                  <h4>Visibility Mechanics</h4>
+                  <p>Transform private use into public display</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 11: FASHION BLUEPRINT
+         ========================================== -->
+    <section class="slide bg-black frame" data-section="Act III: The Prestige" id="slide-11">
+      <span class="frame-page" style="color: var(--color-white);">11</span>
+      <span class="frame-context" style="color: var(--color-white);">The Proof</span>
+      <span class="frame-author" style="color: var(--color-white);">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom: var(--space-xs);">Fashion's Blueprint</h2>
+        <p class="text-lead" style="opacity: 0.6; margin-bottom: var(--space-xl);">The industry that got there first</p>
+
+        <div class="stack stack-lg" style="max-width: 900px;">
+          <div class="transform-item">
+            <span class="transform-label">Production</span>
+            <span class="transform-from">Seasons</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Drops</span>
+          </div>
+          <div class="transform-item">
+            <span class="transform-label">Attention</span>
+            <span class="transform-from">Trade shows</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Viral moments</span>
+          </div>
+          <div class="transform-item">
+            <span class="transform-label">Commerce</span>
+            <span class="transform-from">Boutiques</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Scroll-to-buy</span>
+          </div>
+          <div class="transform-item">
+            <span class="transform-label">Identity</span>
+            <span class="transform-from">Wardrobe</span>
+            <span class="transform-arrow">→</span>
+            <span class="transform-to">Daily dopamine hits</span>
+          </div>
+        </div>
+
+        <p class="text-lead" style="margin-top: var(--space-xl); color: var(--color-volt); font-style: italic;">
+          This previews every industry's future.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 12: CROSS-INDUSTRY
+         ========================================== -->
+    <section class="slide bg-blush frame" data-section="Act III: The Prestige" id="slide-12">
+      <span class="frame-page">12</span>
+      <span class="frame-context">Cross-Industry</span>
+      <span class="frame-author">Igor Schwarzmann</span>
+
+      <div class="content-center">
+        <h2 class="text-display" style="margin-bottom: var(--space-lg);">The Cascade<br>Is Everywhere</h2>
+
+        <div class="industry-cards">
+          <div class="industry-card">
+            <p class="industry-name">Financial</p>
+            <p class="industry-from">Homeownership</p>
+            <p class="industry-to">Fractional shares</p>
+            <p class="industry-example">Robinhood</p>
+          </div>
+          <div class="industry-card">
+            <p class="industry-name">Automotive</p>
+            <p class="industry-from">Car ownership</p>
+            <p class="industry-to">Luxury Uber upgrades</p>
+            <p class="industry-example">Uber Black, Lyft Lux</p>
+          </div>
+          <div class="industry-card">
+            <p class="industry-name">Travel</p>
+            <p class="industry-from">Second homes</p>
+            <p class="industry-to">Airport lounge passes</p>
+            <p class="industry-example">Priority Pass</p>
+          </div>
+          <div class="industry-card">
+            <p class="industry-name">Food</p>
+            <p class="industry-from">Fine dining</p>
+            <p class="industry-to">$20 smoothies</p>
+            <p class="industry-example">Erewhon</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SLIDE 13: FINAL CTA
+         ========================================== -->
+    <section class="slide bg-black" id="slide-13">
+      <div class="content-center">
+        <h2 class="text-display" style="text-align: center; margin-bottom: var(--space-xl); max-width: none;">
+          Master <span style="color: var(--color-volt);">Aspiration Arbitrage</span>
+        </h2>
+
+        <div class="cta-grid">
+          <div class="cta-pillar">
+            <div class="cta-icon">$</div>
+            <h3>Economic Design</h3>
+            <p>Price for impulse.<br>Remove friction.</p>
+          </div>
+          <div class="cta-pillar">
+            <div class="cta-icon">⚡</div>
+            <h3>Dopamine Optimization</h3>
+            <p>3-second hooks.<br>Collection behaviors.</p>
+          </div>
+          <div class="cta-pillar">
+            <div class="cta-icon">👁</div>
+            <h3>Visibility Engineering</h3>
+            <p>Shareable content.<br>Identity markers.</p>
+          </div>
+        </div>
+
+        <div class="final-statement">
+          <p>In a world where only micro-moments matter,<br><span class="highlight">aspiration arbitrage</span> is your competitive advantage.</p>
+        </div>
+      </div>
+      <span class="frame-author" style="color: var(--color-white);">Igor Schwarzmann</span>
+    </section>
+
+  </article>
+
+  <script>
+    // ============================================
+    // NAVIGATION & INTERACTIVITY
+    // ============================================
+
+    const slides = document.querySelectorAll('.slide');
+    const navDots = document.querySelectorAll('.nav-dot');
+    const keyboardHint = document.querySelector('.keyboard-hint');
+    const thumbnailPanel = document.getElementById('thumbnailPanel');
+    const panelToggle = document.getElementById('panelToggle');
+    const panelClose = document.querySelector('.panel-close');
+    const thumbnailItems = document.querySelectorAll('.thumbnail-item');
+    let currentSlide = 0;
+    let hasInteracted = false;
+
+    // Toggle thumbnail panel
+    function togglePanel() {
+      thumbnailPanel.classList.toggle('collapsed');
+    }
+
+    panelToggle.addEventListener('click', togglePanel);
+    panelClose.addEventListener('click', togglePanel);
+
+    // Update active nav dot and thumbnail based on scroll position
+    function updateNavDots() {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+
+      slides.forEach((slide, index) => {
+        const slideTop = slide.offsetTop;
+        const slideBottom = slideTop + slide.offsetHeight;
+
+        if (scrollPosition >= slideTop - windowHeight / 2 && scrollPosition < slideBottom - windowHeight / 2) {
+          currentSlide = index;
+
+          // Update nav dots
+          navDots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+
+          // Update thumbnails
+          thumbnailItems.forEach((item, i) => {
+            item.classList.toggle('active', i === index);
+          });
+
+          // Scroll active thumbnail into view
+          if (thumbnailItems[index]) {
+            thumbnailItems[index].scrollIntoView({
+              behavior: 'smooth',
+              block: 'nearest'
+            });
+          }
+        }
+      });
+    }
+
+    // Navigate to specific slide
+    function goToSlide(index) {
+      if (index >= 0 && index < slides.length) {
+        slides[index].scrollIntoView({ behavior: 'smooth' });
+        currentSlide = index;
+        hideHint();
+      }
+    }
+
+    // Hide keyboard hint after first interaction
+    function hideHint() {
+      if (!hasInteracted) {
+        hasInteracted = true;
+        keyboardHint.classList.add('hidden');
+      }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault();
+        goToSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        goToSlide(currentSlide - 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        goToSlide(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        goToSlide(slides.length - 1);
+      }
+    });
+
+    // Click navigation on dots
+    navDots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+      });
+    });
+
+    // Click navigation on thumbnails
+    thumbnailItems.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        goToSlide(index);
+      });
+    });
+
+    // Update on scroll
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(updateNavDots, 50);
+      hideHint();
+    }, { passive: true });
+
+    // Re-trigger animations when slides come into view
+    const observerOptions = {
+      threshold: 0.3,
+      rootMargin: '0px'
+    };
+
+    const slideObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Re-trigger animations by removing and adding classes
+          const animatedElements = entry.target.querySelectorAll('[class*="animation"]');
+          animatedElements.forEach(el => {
+            el.style.animation = 'none';
+            el.offsetHeight; // Trigger reflow
+            el.style.animation = null;
+          });
+        }
+      });
+    }, observerOptions);
+
+    slides.forEach(slide => slideObserver.observe(slide));
+
+    // Initial state
+    updateNavDots();
+  </script>
+</body>
+</html>
