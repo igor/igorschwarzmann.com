@@ -1,0 +1,170 @@
+---
+import EssayLayout from '../../../layouts/EssayLayout.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://igorschwarzmann.com/meinbezirk/toolkit/#article",
+      "headline": "MeinBezirk: Von der Idee zum Open-Source-Toolkit",
+      "description": "Wie aus einer persönlichen Frustration ein offenes Toolkit für kommunale Transparenz wurde. In 90 Minuten gebaut, als Blaupause veröffentlicht.",
+      "author": { "@id": "https://igorschwarzmann.com/#person" },
+      "publisher": { "@id": "https://igorschwarzmann.com/#org" },
+      "datePublished": "2026-02-21",
+      "dateModified": "2026-02-21",
+      "mainEntityOfPage": "https://igorschwarzmann.com/meinbezirk/toolkit/",
+      "inLanguage": "de"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://igorschwarzmann.com/" },
+        { "@type": "ListItem", "position": 2, "name": "MeinBezirk", "item": "https://igorschwarzmann.com/meinbezirk/" },
+        { "@type": "ListItem", "position": 3, "name": "Toolkit", "item": "https://igorschwarzmann.com/meinbezirk/toolkit/" }
+      ]
+    }
+  ]
+};
+---
+
+<EssayLayout
+  title="MeinBezirk: Von der Idee zum Open-Source-Toolkit — Igor Schwarzmann"
+  description="Wie aus einer persönlichen Frustration ein offenes Toolkit für kommunale Transparenz wurde. In 90 Minuten gebaut, als Blaupause veröffentlicht."
+  ogTitle="MeinBezirk: Von der Idee zum Open-Source-Toolkit"
+  ogDescription="Wie aus einer persönlichen Frustration ein offenes Toolkit für kommunale Transparenz wurde."
+  canonicalUrl="https://igorschwarzmann.com/meinbezirk/toolkit/"
+  twitterTitle="MeinBezirk: Von der Idee zum Open-Source-Toolkit"
+  twitterDescription="Wie aus einer persönlichen Frustration ein offenes Toolkit für kommunale Transparenz wurde."
+  structuredData={structuredData}
+>
+
+    <article>
+        <!-- Header -->
+        <header class="essay-header">
+            <div class="essay-meta">
+                <a href="/meinbezirk" class="essay-meta__link">MeinBezirk</a>
+                <span class="essay-meta__separator">/</span>
+                <time datetime="2026-02">Februar 2026</time>
+                <span class="essay-meta__separator">/</span>
+                <span>5 min</span>
+            </div>
+            <h1>Von der Idee zum Toolkit</h1>
+            <p class="essay-deck">Wie aus einer pers&ouml;nlichen Frustration ein offenes Toolkit f&uuml;r kommunale Transparenz wurde</p>
+        </header>
+
+        <!-- Intro / context -->
+        <div class="essay-intro">
+            <p>Vor ein paar Tagen war ich zu Besuch in einer Kita. Die Leiterin erw&auml;hnte nebenher, dass t&auml;gliches Z&auml;hneputzen jetzt in allen Berliner Kitas Pflicht ist. Seit dem 24. Dezember 2025.</p>
+            <p>Ich bin Vater. Mein Kind geht in eine Kita. Ich hatte keine Ahnung.</p>
+            <p>Am selben Abend setzte ich mich hin und baute etwas. 90 Minuten sp&auml;ter stand ein Konzept namens <a href="/meinbezirk/">MeinBezirk</a>. Ich postete es auf LinkedIn. Innerhalb von Stunden kamen die Reaktionen.</p>
+        </div>
+
+        <div class="essay-intro-border"><hr></div>
+
+        <!-- Body -->
+        <div class="essay-body">
+
+            <h2>Die Frustration</h2>
+
+            <p>Wie viele Entscheidungen werden jeden Monat im Bezirk, im Senat getroffen, die meinen Alltag direkt betreffen&mdash;und ich erfahre nichts davon?</p>
+
+            <p>Die Informationen sind technisch &ouml;ffentlich. BVV-Protokolle existieren. Pressemitteilungen existieren. Aber niemand liest sie. Sie sind in Systemen vergraben, die f&uuml;r die Verwaltung gebaut wurden, nicht f&uuml;r B&uuml;rger. In Amtsdeutsch geschrieben, nach Aussch&uuml;ssen sortiert, als PDF ver&ouml;ffentlicht.</p>
+
+            <p>Die L&uuml;cke ist nicht Zugang. Die L&uuml;cke ist <strong>Relevanz und Verst&auml;ndlichkeit</strong>.</p>
+
+            <h2>Der Prototyp</h2>
+
+            <p>MeinBezirk ist ein Feed mit Entscheidungen auf Bezirksebene, gefiltert nach dem, was einen tats&auml;chlich betrifft. Bist du Elternteil? Mieter:in? Wohnst du in Sch&ouml;neberg oder Mariendorf? Basierend auf echten Entscheidungen: der Schulneubau an der Eisenacher Stra&szlig;e, der Radweg in der Sch&ouml;neberger Stra&szlig;e, die zwei neuen Spielpl&auml;tze in der Neuen Mitte Tempelhof.</p>
+
+            <p>Wichtig: Ich habe keine Daten verwendet, die nicht bereits &ouml;ffentlich zug&auml;nglich sind. Die Quellen sind <a href="https://pardok.parlament-berlin.de">PARDOK</a> (Parlamentsdokumentation des Abgeordnetenhauses) und ALLRIS (Ratsinformationssystem der Bezirke). Aber genau das ist der Punkt: <strong>Die Informationen existieren. Sie erreichen nur die Menschen nicht, f&uuml;r die sie gedacht sind.</strong></p>
+
+            <h2>Die Reaktion</h2>
+
+            <p>Der LinkedIn-Post bekam innerhalb von 16 Stunden &uuml;ber 130 Likes und knapp 30 Kommentare. Die meisten mit dem gleichen Wunsch: <strong>das in der eigenen Kommune umzusetzen.</strong></p>
+
+            <p>Aus Hamburg. Aus K&ouml;ln. Aus M&uuml;nchen. Aus kleineren St&auml;dten. Von Leuten, die in Verwaltungen arbeiten. Von Leuten, die in B&uuml;rgerinitiativen aktiv sind. Von Entwickler:innen, die sofort anfangen wollten.</p>
+
+            <p>Das war der Moment, in dem sich die Frage &auml;nderte. Nicht mehr: &bdquo;Wie kann ich diesen Prototyp verbessern?&ldquo; Sondern: <strong>&bdquo;Wie kann ich anderen erm&ouml;glichen, dasselbe f&uuml;r ihre Stadt zu tun?&ldquo;</strong></p>
+
+            <h2>Machbarkeitsunterschied, nicht Geschwindigkeitsunterschied</h2>
+
+            <p>Vor einem Jahr h&auml;tte MeinBezirk ein Team gebraucht, ein Budget, Monate. Nicht weil die Idee kompliziert ist. Sondern weil die Arbeit es war: hunderte Verwaltungsdokumente durchgehen, Relevanz filtern, Amtsdeutsch &uuml;bersetzen, ein Interface bauen.</p>
+
+            <p>KI hat das nicht schneller gemacht. KI hat es <strong>m&ouml;glich</strong> gemacht. F&uuml;r eine einzelne Person. An einem Abend.</p>
+
+            <p>Das ist der Unterschied, der z&auml;hlt. Nicht Geschwindigkeit. Machbarkeit.</p>
+
+            <p>Und wenn ich das in 90 Minuten bauen kann, kann ein Bezirksamt das Echte bauen. Oder bauen lassen.</p>
+
+            <h2>Vom Prototyp zur Blaupause</h2>
+
+            <p>Der Code allein hilft niemandem in K&ouml;ln. Die Datenquellen sind andere. Die Bezirksstruktur ist anders. Die relevanten Themen sind andere.</p>
+
+            <p>Was &uuml;bertragbar ist, ist nicht der Code. Es ist die <strong>Methodik</strong>:</p>
+
+            <ol>
+                <li><strong>Verstehen</strong>&mdash;warum kommunale Transparenz scheitert und wo die L&uuml;cke liegt</li>
+                <li><strong>Daten finden</strong>&mdash;wo die Entscheidungsdaten in deiner Stadt liegen und wie du sie findest</li>
+                <li><strong>Relevanz gestalten</strong>&mdash;wie du Informationen nach dem Leben der B&uuml;rger ordnest, nicht nach dem Organigramm der Verwaltung</li>
+                <li><strong>Umsetzen</strong>&mdash;Gestaltungsprinzipien und technische Leitlinien</li>
+                <li><strong>Betreiben</strong>&mdash;wer das betreibt, wie, und wie man die Kommune &uuml;berzeugt</li>
+            </ol>
+
+            <p>Diese f&uuml;nf Phasen sind jetzt als <a href="https://github.com/igor/meinbezirk">Open-Source-Toolkit auf GitHub</a> ver&ouml;ffentlicht.</p>
+
+            <h2>Was drin ist</h2>
+
+            <p>Das Toolkit enth&auml;lt eine <strong>Fallstudie aus Berlin</strong>&mdash;wie der Prototyp seine Daten gefunden hat, welche Systeme es gibt (PARDOK, ALLRIS), was funktioniert hat und was schwieriger war.</p>
+
+            <p>Es enth&auml;lt ein <strong>Muster f&uuml;r andere St&auml;dte</strong>&mdash;eine &Uuml;bersicht der deutschen Datenlandschaft (SD.net, Session, OParl), eine Checkliste f&uuml;r die Datenrecherche, und Hinweise auf Werkzeuge wie <a href="https://politik-bei-uns.de">Politik bei uns</a> und <a href="https://oparl.org">OParl</a>.</p>
+
+            <p>Es enth&auml;lt <strong>Gestaltungsprinzipien</strong>, adaptiert vom <a href="https://www.gov.uk/guidance/government-design-principles">UK Government Digital Service</a>: Mach die harte Arbeit, damit es einfach wird. Das ist f&uuml;r alle. Fang mit Nutzer:innen-Bed&uuml;rfnissen an.</p>
+
+            <p>Und es enth&auml;lt den Teil, der gerne &uuml;bersprungen wird: <strong>Betrieb</strong>. Wer pflegt das? Wie &uuml;berzeugt man die Kommune? Was kostet es wirklich? (Nicht Geld. Aufmerksamkeit.)</p>
+
+            <h2>Was es nicht ist</h2>
+
+            <p>Kein fertiges Produkt. Kein Framework zum Installieren. Keine vollst&auml;ndige Taxonomie aller m&ouml;glichen Filterachsen. Die drei Dimensionen des Berliner Prototyps&mdash;Lebenslage, Ort, Anlass&mdash;sind ein Beispiel. Nicht die L&ouml;sung.</p>
+
+            <p>Das Toolkit beschreibt eine Methode. Was dabei herauskommt, h&auml;ngt von der Stadt ab, den Menschen, den Daten. Das ist Absicht.</p>
+
+            <h2>Auf den Schultern anderer</h2>
+
+            <p>MeinBezirk existiert nicht im Vakuum. Viele Akteure im Open-Data-Feld haben die Vorarbeit geleistet, die es &uuml;berhaupt m&ouml;glich macht, dass kommunale Daten heute so verf&uuml;gbar sind. <a href="https://oparl.org">OParl</a>, <a href="https://politik-bei-uns.de">Politik bei uns</a>, <a href="https://codefor.de">Code for Germany</a>, die <a href="https://okfn.de">Open Knowledge Foundation</a>&mdash;ohne sie g&auml;be es nichts anzuzapfen.</p>
+
+            <p>Aber vieles davon ist noch sehr b&uuml;rokratisch. Sprachlich und &auml;sthetisch nicht zug&auml;nglich f&uuml;r die Menschen, die es betrifft. Die Daten sind offen. Die Schwelle ist trotzdem zu hoch.</p>
+
+            <p>Mein Ziel ist es, diese Schwelle abzusenken. Erkennbar zu machen, dass vieles gemacht wird, von dem wir alle nicht genug mitbekommen. Politik passiert. Sie erreicht nur zu selten die Menschen, f&uuml;r die sie gedacht ist.</p>
+
+            <p>Das hier ist auch eine Provokation. Nicht gegen die, die die Vorarbeit leisten. Sondern f&uuml;r die Frage: Wenn die Daten da sind&mdash;warum sieht das Ergebnis nicht l&auml;ngst so aus?</p>
+
+            <h2>Was als N&auml;chstes passiert</h2>
+
+            <p>Das Toolkit ist offen. Der <a href="/meinbezirk/">Prototyp</a> ist live. Der <a href="https://github.com/igor/meinbezirk">Code und die Methodik</a> sind auf GitHub.</p>
+
+            <p>Wenn du in einer Stadt lebst und denkst: &bdquo;Das brauchen wir auch&ldquo;&mdash;dann ist das Toolkit f&uuml;r dich. Fork es. Adaptiere es. Bring es zu deiner Verwaltung.</p>
+
+            <p>Und wenn du in einer Verwaltung arbeitest und denkst: &bdquo;Das k&ouml;nnten wir&ldquo;&mdash;ja. K&ouml;nnt ihr. Der Aufwand ist &uuml;berschaubar. Der Effekt nicht.</p>
+
+            <p>MeinBezirk ist nicht die einzige Antwort. Und selbst diese kann verbessert werden. Genau daf&uuml;r ist es Open Source.</p>
+
+            <blockquote class="pullquote">
+                <p>Die Informationen existieren bereits. Sie m&uuml;ssen nur die Menschen erreichen, f&uuml;r die sie gedacht sind.</p>
+            </blockquote>
+
+        </div>
+
+        <!-- Separator -->
+        <div class="essay-separator">
+            <hr>
+        </div>
+
+        <!-- Footer -->
+        <footer class="essay-footer">
+            <p><a href="https://igorschwarzmann.com">Igor Schwarzmann</a> ist Berater und Stratege f&uuml;r Kultur, Technologie und KI. Er lebt in Berlin-Friedenau und leitet <a href="https://knownunknowns.de">Known Unknowns</a>.</p>
+            <p>Kontakt: <a href="mailto:hello@igorschwarzmann.com">hello@igorschwarzmann.com</a></p>
+        </footer>
+    </article>
+
+</EssayLayout>
